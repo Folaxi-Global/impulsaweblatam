@@ -51,7 +51,17 @@ export default function Home() {
             Lanza tu presencia digital en menos de 2 minutos. Sin código, sin configuraciones complejas y optimizado para potenciar tus ventas locales y regionales.
           </p>
 
-          {/* Botones de acción principales con mejor jerarquía */}
+          {/* Selector de Países Visual (Demostración de Cobertura Latam) */}
+          <div className="flex flex-wrap items-center justify-center gap-2 pt-2">
+            <span className="text-xs text-slate-400 uppercase tracking-wider font-semibold mr-2">Operando en:</span>
+            <span className="bg-slate-900 border border-slate-800 text-xs text-slate-300 px-3 py-1.5 rounded-lg flex items-center gap-1.5">🇨🇱 Chile</span>
+            <span className="bg-slate-900 border border-slate-800 text-xs text-slate-300 px-3 py-1.5 rounded-lg flex items-center gap-1.5">🇲🇽 México</span>
+            <span className="bg-slate-900 border border-slate-800 text-xs text-slate-300 px-3 py-1.5 rounded-lg flex items-center gap-1.5">🇨🇴 Colombia</span>
+            <span className="bg-slate-900 border border-slate-800 text-xs text-slate-300 px-3 py-1.5 rounded-lg flex items-center gap-1.5">🇦🇷 Argentina</span>
+            <span className="bg-slate-900 border border-slate-800 text-xs text-slate-300 px-3 py-1.5 rounded-lg flex items-center gap-1.5">🇵🇪 Perú</span>
+          </div>
+
+          {/* Botones de acción principales */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-6">
             <a 
               href="/crear" 
@@ -85,7 +95,7 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Tarjetas de Características (Grid con efectos de borde degradado) */}
+        {/* Tarjetas de Características */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-20">
           
           <div className="group bg-slate-900/40 border border-slate-800/80 hover:border-cyan-500/50 p-8 rounded-2xl backdrop-blur-md transition duration-300 shadow-lg">
@@ -118,6 +128,84 @@ export default function Home() {
             </p>
           </div>
 
+        </div>
+
+        {/* Casos de Éxito y Testimonios */}
+        <div className="pt-28">
+          <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
+            <span className="text-cyan-400 text-xs font-semibold tracking-wider uppercase bg-cyan-500/10 px-3 py-1 rounded-full border border-cyan-500/20">
+              Casos de Éxito
+            </span>
+            <h2 className="text-3xl md:text-4xl font-black tracking-tight">
+              Emprendedores que ya escalaron sus ventas
+            </h2>
+            <p className="text-slate-400 text-sm">
+              Descubre cómo negocios locales pasaron al formato digital y aumentaron su captación de clientes de forma inmediata.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            
+            <div className="bg-slate-900/60 border border-slate-800 p-6 rounded-2xl flex flex-col justify-between">
+              <p className="text-sm text-slate-300 italic mb-6">
+                &ldquo;Tenía mi barbería y dependía solo del boca a boca. Con ImpulsaWeb armé mi página en 2 minutos y ahora los clientes reservan directo a mi WhatsApp.&rdquo;
+              </p>
+              <div>
+                <div className="font-bold text-sm text-white">Carlos Valenzuela</div>
+                <div className="text-xs text-cyan-400">Barbería El Estilo • Chile 🇨🇱</div>
+              </div>
+            </div>
+
+            <div className="bg-slate-900/60 border border-slate-800 p-6 rounded-2xl flex flex-col justify-between">
+              <p className="text-sm text-slate-300 italic mb-6">
+                &ldquo;Excelente plataforma. Lo que más me gusta es lo rápido que cargó el sitio y lo profesional que se ve desde el celular. Mis ventas aumentaron un 40%.&rdquo;
+              </p>
+              <div>
+                <div className="font-bold text-sm text-white">Mariana Gómez</div>
+                <div className="text-xs text-cyan-400">Cafetería & Repostería • México 🇲🇽</div>
+              </div>
+            </div>
+
+            <div className="bg-slate-900/60 border border-slate-800 p-6 rounded-2xl flex flex-col justify-between">
+              <p className="text-sm text-slate-300 italic mb-6">
+                &ldquo;No sabía nada de programación, pero seguir los pasos fue facilísimo. Ahora mi consultora tiene una presencia impecable en internet.&rdquo;
+              </p>
+              <div>
+                <div className="font-bold text-sm text-white">Andrés Restrepo</div>
+                <div className="text-xs text-cyan-400">Servicios Profesionales • Colombia 🇨🇴</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        {/* Sección de Preguntas Frecuentes (FAQ) */}
+        <div className="pt-28 max-w-3xl mx-auto">
+          <div className="text-center mb-16 space-y-3">
+            <span className="text-cyan-400 text-xs font-semibold tracking-wider uppercase bg-cyan-500/10 px-3 py-1 rounded-full border border-cyan-500/20">
+              Dudas comunes
+            </span>
+            <h2 className="text-3xl md:text-4xl font-black tracking-tight">
+              Preguntas Frecuentes
+            </h2>
+          </div>
+
+          <div className="space-y-4">
+            <div className="bg-slate-900/40 border border-slate-800 p-6 rounded-2xl">
+              <h3 className="font-bold text-base text-white mb-2">¿Realmente es gratis crear la página web?</h3>
+              <p className="text-sm text-slate-400">Sí. El diseño base, las plantillas y el formulario inicial no tienen ningún costo. Solo seleccionas tu plan de mantenimiento cuando estás listo para mantener tu web activa en internet.</p>
+            </div>
+
+            <div className="bg-slate-900/40 border border-slate-800 p-6 rounded-2xl">
+              <h3 className="font-bold text-base text-white mb-2">¿Cómo funciona la conexión con WhatsApp?</h3>
+              <p className="text-sm text-slate-400">Cada botón de llamada a la acción en tu sitio web se vincula automáticamente con tu número telefónico registrado, permitiendo que tus clientes te escriban al instante con un solo clic.</p>
+            </div>
+
+            <div className="bg-slate-900/40 border border-slate-800 p-6 rounded-2xl">
+              <h3 className="font-bold text-base text-white mb-2">¿Necesito conocimientos técnicos avanzados?</h3>
+              <p className="text-sm text-slate-400">Para nada. Nuestra plataforma está diseñada para emprendedores sin experiencia técnica. Solo completas el formulario y tu sitio web queda listo de inmediato.</p>
+            </div>
+          </div>
         </div>
 
         {/* Footer Minimalista */}
