@@ -1,83 +1,40 @@
 'use client'
 
 import { useSearchParams } from 'next/navigation'
-import { useState } from 'react'
+import { Suspense } from 'react'
 
-export default function CheckoutPage() {
+function CheckoutContent() {
   const searchParams = useSearchParams()
-  const subdomain = searchParams.get('subdomain') || 'tudominio'
-  const country = searchParams.get('country') || 'CL'
-  
-  const [loading, setLoading] = useState(false)
-
-  const handleActivate = (gateway: string) => {
-    setLoading(true)
-    console.log(`Iniciando pago de $18 USD con ${gateway} para el subdominio: ${subdomain}`)
-
-    // Aquí integrarás la redirección a Stripe o Mercado Pago según corresponda
-    setTimeout(() => {
-      alert(`Conectando con la pasarela de pago (${gateway})...`)
-      setLoading(false)
-    }, 1500)
-  }
+  const plan = searchParams.get('plan') || 'standard'
 
   return (
-    <main className="min-h-screen bg-slate-950 text-white p-6 md:p-12 flex items-center justify-center">
-      <div className="max-w-xl w-full bg-slate-900 border border-slate-800 p-8 rounded-2xl shadow-2xl">
+    <main className="min-h-screen bg-slate-950 text-white p-8 max-w-xl mx-auto">
+      <h1 className="text-3xl font-bold mb-4">Checkout - ImpulsaWeb Latam</h1>
+      <p className="text-slate-400 mb-6">Plan seleccionado: <span className="text-emerald-400 font-semibold">{plan}</span></p>
+      
+      <div className="bg-slate-900 border border-slate-800 p-6 rounded-xl space-y-4">
+        <div className="flex justify-between items-center border-b border-slate-800 pb-4">
+          <span>Mantenimiento por 6 meses</span>
+          <span className="font-bold text-lg">$18.00 USD</span>
+        </div>
+        <p className="text-sm text-slate-400">Incluye hosting, subdominio y pasarela configurada.</p>
         
-        {/* Cabecera del Resumen */}
-        <div className="text-center pb-6 border-b border-slate-800">
-          <span className="text-cyan-400 text-xs font-semibold tracking-wider uppercase bg-cyan-500/10 px-3 py-1 rounded-full border border-cyan-500/20">
-            Paso 2 de 2 • Activación Inmediata
-          </span>
-          <h1 className="text-2xl md:text-3xl font-extrabold mt-4">Tu diseño web es 100% Gratis</h1>
-          <p className="text-slate-400 text-sm mt-2">
-            Solo activa tu cuota de mantenimiento semestral para publicar tu sitio web de forma permanente.
-          </p>
-        </div>
-
-        {/* Resumen del Pedido */}
-        <div className="my-6 bg-slate-950 border border-slate-800 p-5 rounded-xl space-y-3">
-          <div className="flex justify-between text-sm">
-            <span className="text-slate-400">Dirección web:</span>
-            <span className="text-cyan-400 font-mono font-semibold">{subdomain}.impulsaweblatam.com</span>
-          </div>
-          <div className="flex justify-between text-sm">
-            <span className="text-slate-400">Diseño y plantillas:</span>
-            <span className="text-emerald-400 font-semibold">¡GRATIS! ($0)</span>
-          </div>
-          <div className="flex justify-between text-sm border-t border-slate-800/80 pt-3">
-            <span className="text-slate-300 font-medium">Mantenimiento Semestral (6 meses):</span>
-            <span className="text-white font-bold">$18.00 USD</span>
-          </div>
-        </div>
-
-        {/* Botones de Pago Multi-Pasarela */}
-        <div className="space-y-4">
-          <button 
-            onClick={() => handleActivate('Stripe')}
-            disabled={loading}
-            className="w-full bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold py-4 rounded-xl transition shadow-lg shadow-cyan-500/20 disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer"
-          >
-            {loading ? 'Procesando...' : 'Pagar con Tarjeta (Stripe - Internacional)'}
-          </button>
-
-          <button 
-            onClick={() => handleActivate('Mercado Pago')}
-            disabled={loading}
-            className="w-full bg-sky-600 hover:bg-sky-500 text-white font-bold py-4 rounded-xl transition shadow-lg shadow-sky-600/20 disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer"
-          >
-            {loading ? 'Procesando...' : 'Pagar con Medios Locales (Mercado Pago)'}
-          </button>
-        </div>
-
-        {/* Garantía y Seguridad */}
-        <div className="mt-6 text-center text-xs text-slate-500 space-y-1">
-          <p>🛡️ Pago 100% seguro y encriptado.</p>
-          <p>Se renovará automáticamente cada 6 meses. Puedes cancelar cuando quieras con un solo clic.</p>
-        </div>
-
+        {/* Botón de pago */}
+        <button 
+          onClick={() => alert('Redirigiendo a pasarela de pago...')}
+          className="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 rounded-lg transition"
+        >
+          Pagar $18.00 USD
+        </button>
       </div>
     </main>
+  )
+}
+
+export default function CheckoutPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-slate-950 text-white p-8">Cargando pasarela...</div>}>
+      <CheckoutContent />
+    </Suspense>
   )
 }
