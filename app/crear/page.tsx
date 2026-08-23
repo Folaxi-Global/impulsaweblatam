@@ -1,8 +1,8 @@
-
 'use client'
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { createSiteAction } from './actions'
 
 export default function CrearWebPage() {
   const router = useRouter()
@@ -33,13 +33,15 @@ export default function CrearWebPage() {
         throw new Error('El subdominio debe tener al menos 3 caracteres válidos.')
       }
 
-      console.log('Registrando datos en Supabase:', formData)
+      // Llamamos a la Server Action para guardar en Supabase de forma segura
+      const result = await createSiteAction(formData)
 
-      // Simulación de guardado y salto al checkout
-      setTimeout(() => {
-        setLoading(false)
-        router.push(`/checkout?subdomain=${formData.subdomain}&country=${formData.country}`)
-      }, 1200)
+      if (!result.success) {
+        throw new Error(result.error || 'Error al registrar el sitio web.')
+      }
+
+      // Si todo sale bien, redirigimos al checkout pasando el subdominio y el país
+      router.push(`/checkout?subdomain=${result.subdomain}&country=${result.country}`)
 
     } catch (error: any) {
       console.error('Error al procesar el formulario:', error)
@@ -215,7 +217,7 @@ export default function CrearWebPage() {
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                   </svg>
-                  Preparando tu sitio web...
+                  Guardando en la base de datos...
                 </>
               ) : (
                 'Guardar y Continuar al Mantenimiento Semestral ($18 USD)'
