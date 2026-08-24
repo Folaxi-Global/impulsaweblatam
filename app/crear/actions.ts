@@ -1,8 +1,6 @@
-
 'use server'
 
 import { createClient } from '@supabase/supabase-js'
-import { redirect } from 'next/navigation'
 
 // Inicializamos Supabase en el servidor con las credenciales de entorno
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || ''
@@ -57,5 +55,43 @@ export async function createSiteAction(formData: {
   } catch (err: any) {
     console.error('Error en createSiteAction:', err.message)
     return { success: false, error: err.message }
+  }
+}
+
+// ==========================================
+// NUEVA FUNCIÓN: Subida de archivos a Bunny.net
+// ==========================================
+export async function uploadVideoToBunnyAction(fileBuffer: Buffer, fileName: string) {
+  try {
+    const storageZoneName = process.env.BUNNY_STORAGE_ZONE_NAME;
+    const storagePassword = process.env.BUNNY_STORAGE_PASSWORD;
+    const storageHost = process.env.BUNNY_STORAGE_HOST || 'storage.bunnycdn.com';
+
+    if (!storageZoneName || !storagePassword) {
+      throw new Error('Faltan las credenciales de Bunny.net en las variables de entorno.');
+    }
+
+    const url = `https://${storageHost}/${storageZoneName}/${fileName}`;
+
+    const response = await fetch(url, {
+      method: 'PUT',
+      headers: {
+        AccessKey: storagePassword,
+        'Content-Type': 'application/octet-stream',
+      },
+      body: fileBuffer,
+    });
+
+    if (!response.ok) {
+      throw new Error(`Error al subir a Bunny.net: ${response.statusText}`);
+    }
+
+    // Retorna la URL pública utilizando el dominio de tu zona (o tu CDN vinculada)
+    const publicUrl = `https://${storageZoneName}.b-cdn.net/${fileName}`;
+    return { success: true, url: publicUrl };
+
+  } catch (err: any) {
+    console.error('Error en uploadVideoToBunnyAction:', err.message);
+    return { success: false, error: err.message };
   }
 }
