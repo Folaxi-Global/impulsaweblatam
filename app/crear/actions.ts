@@ -2,7 +2,7 @@
 
 import { createClient } from '@supabase/supabase-js'
 
-// Inicializamos Supabase en el servidor con las credenciales de entorno
+// Inicialización segura de Supabase en el servidor
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || ''
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
 
@@ -51,18 +51,18 @@ export async function createSiteAction(formData: {
     return { success: true, subdomain: formData.subdomain, country: formData.country }
 
   } catch (err: any) {
-    console.error('Error en createSiteAction:', err.message)
+    console.error('[Action Error] createSiteAction:', err.message)
     return { success: false, error: err.message }
   }
 }
 
 // ==========================================
-// 1. MÓDULO DE VOZ (ElevenLabs)
+// 1. MÓDULO DE VOZ ULTRA PRO (ElevenLabs)
 // ==========================================
-async function generateVoiceBuffer(text: string, voiceId: string = '21m00Tcm4TlvDq8ikWAM') {
+async function generateVoiceBuffer(text: string, voiceId: string = '21m00Tcm4TlvDq8ikWAM'): Promise<Buffer> {
   const apiKey = process.env.ELEVENLABS_API_KEY;
   if (!apiKey) {
-    throw new Error('Falta la clave de ElevenLabs en las variables de entorno (ELEVENLABS_API_KEY).');
+    throw new Error('Falta la credencial ELEVENLABS_API_KEY en el entorno de producción.');
   }
 
   const response = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`, {
@@ -81,7 +81,7 @@ async function generateVoiceBuffer(text: string, voiceId: string = '21m00Tcm4Tlv
 
   if (!response.ok) {
     const errorData = await response.text();
-    throw new Error(`Error en ElevenLabs API: ${errorData}`);
+    throw new Error(`Fallo en ElevenLabs API (${response.status}): ${errorData}`);
   }
 
   const arrayBuffer = await response.arrayBuffer();
@@ -89,20 +89,22 @@ async function generateVoiceBuffer(text: string, voiceId: string = '21m00Tcm4Tlv
 }
 
 // ==========================================
-// 2. MÓDULO DE ALMACENAMIENTO (Bunny.net)
+// 2. MÓDULO DE ALMACENAMIENTO CLOUD (Bunny.net)
 // ==========================================
-async function uploadBufferToBunny(fileBuffer: Buffer, fileName: string) {
+async function uploadBufferToBunny(fileBuffer: Buffer, fileName: string): Promise<string> {
   const storageZoneName = process.env.BUNNY_STORAGE_ZONE_NAME;
   const storagePassword = process.env.BUNNY_STORAGE_PASSWORD;
   const storageHost = process.env.BUNNY_STORAGE_HOST || 'storage.bunnycdn.com';
+  // Soporte para CDN personalizada o Pull Zone configurada en variables de entorno
+  const cdnHostname = process.env.BUNNY_CDN_HOSTNAME || `${storageZoneName}.b-cdn.net`;
 
   if (!storageZoneName || !storagePassword) {
-    throw new Error('Faltan las credenciales de Bunny.net en las variables de entorno.');
+    throw new Error('Faltan las credenciales de Bunny.net (Storage Zone Name o Password) en las variables de entorno.');
   }
 
-  const url = `https://${storageHost}/${storageZoneName}/${fileName}`;
+  const uploadUrl = `https://${storageHost}/${storageZoneName}/${fileName}`;
 
-  const response = await fetch(url, {
+  const response = await fetch(uploadUrl, {
     method: 'PUT',
     headers: {
       AccessKey: storagePassword,
@@ -112,35 +114,39 @@ async function uploadBufferToBunny(fileBuffer: Buffer, fileName: string) {
   });
 
   if (!response.ok) {
-    throw new Error(`Error al subir a Bunny.net Storage: ${response.statusText}`);
+    const errorBody = await response.text();
+    throw new Error(`Fallo al subir a Bunny.net Storage (${response.status}): ${response.statusText} - ${errorBody}`);
   }
 
-  return `https://${storageZoneName}.b-cdn.net/${fileName}`;
+  // Retorna la URL pública optimizada por CDN de producción
+  return `https://${cdnHostname}/${fileName}`;
 }
 
 // ==========================================
-// 3. ORQUESTADOR MAESTRO (Une IA + Cloud Storage)
+// 3. ORQUESTADOR MAESTRO DE PRODUCCIÓN (IA + CDN)
 // ==========================================
 export async function processAndStoreMediaAction(textScript: string, customFileName?: string) {
   try {
     if (!textScript || textScript.trim() === '') {
-      throw new Error('El guion de texto no puede estar vacío.');
+      throw new Error('El guion de texto proporcionado para la síntesis multimedia está vacío.');
     }
 
-    // Paso A: Generar nombre de archivo único basado en timestamp
-    const fileName = customFileName || `audio_${Date.now()}.mp3`;
+    // Generador de identificador único a prueba de colisiones
+    const sanitizedFileName = customFileName 
+      ? customFileName.replace(/[^a-zA-Z0-9-_]/g, '_') 
+      : `media_${Date.now()}_${Math.random().toString(36.substring(2, 7))}.mp3`;
 
-    console.log('Iniciando síntesis de voz con ElevenLabs...');
+    console.info(`[Media Pipeline] Iniciando síntesis de voz (ElevenLabs) para archivo: ${sanitizedFileName}`);
     const audioBuffer = await generateVoiceBuffer(textScript);
 
-    console.log('Subiendo archivo resultante a Bunny.net Storage...');
-    const publicUrl = await uploadBufferToBunny(audioBuffer, fileName);
+    console.info(`[Media Pipeline] Subiendo activo multimedia a la nube (Bunny.net)...`);
+    const publicCdnUrl = await uploadBufferToBunny(audioBuffer, sanitizedFileName);
 
-    console.log('¡Proceso completado con éxito!', publicUrl);
-    return { success: true, url: publicUrl };
+    console.info(`[Media Pipeline] Éxito total. Recurso disponible en: ${publicCdnUrl}`);
+    return { success: true, url: publicCdnUrl };
 
   } catch (err: any) {
-    console.error('Error en processAndStoreMediaAction:', err.message);
+    console.error('[Pipeline Error Critical] processAndStoreMediaAction:', err.message);
     return { success: false, error: err.message };
   }
 }
