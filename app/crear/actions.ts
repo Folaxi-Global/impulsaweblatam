@@ -1,152 +1,200 @@
-'use server'
+'use client'
 
-import { createClient } from '@supabase/supabase-js'
+import { useState } from 'react'
+import { processAndStoreMediaAction } from './actions'
 
-// Inicialización segura de Supabase en el servidor
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || ''
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
+interface MediaItem {
+  url: string
+  script: string
+  timestamp: string
+}
 
-const supabase = createClient(supabaseUrl, supabaseServiceKey)
+export default function StudioPage() {
+  const [scriptText, setScriptText] = useState('')
+  const [voiceId, setVoiceId] = useState('21m00Tcm4TlvDq8ikWAM') // Voz por defecto
+  const [loading, setLoading] = useState(false)
+  const [currentMedia, setCurrentMedia] = useState<string | null>(null)
+  const [history, setHistory] = useState<MediaItem[]>([])
+  const [errorMsg, setErrorMsg] = useState('')
+  const [copied, setCopied] = useState(false)
 
-export async function createSiteAction(formData: {
-  businessName: string
-  subdomain: string
-  category: string
-  country: string
-  whatsapp: string
-  description: string
-  template: string
-}) {
-  try {
-    const { data: existingSite, error: checkError } = await supabase
-      .from('sites')
-      .select('id')
-      .eq('subdomain', formData.subdomain)
-      .single()
+  const handleGenerateMedia = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!scriptText.trim()) return
 
-    if (existingSite) {
-      throw new Error('Este subdominio ya está en uso. Por favor, elige otro.')
-    }
+    setLoading(true)
+    setErrorMsg('')
+    setCurrentMedia(null)
+    setCopied(false)
 
-    const { error: insertError } = await supabase
-      .from('sites')
-      .insert([
-        {
-          business_name: formData.businessName,
-          subdomain: formData.subdomain,
-          category: formData.category,
-          country: formData.country,
-          whatsapp: formData.whatsapp,
-          description: formData.description,
-          template: formData.template,
-          status: 'pending_payment',
-          created_at: new Date().toISOString()
-        }
+    try {
+      // Enviamos el prompt y la voz seleccionada al orquestador en el servidor
+      const result = await processAndStoreMediaAction(scriptText, voiceId)
+
+      if (!result.success) {
+        throw new Error(result.error || 'Error al procesar el contenido multimedia.')
+      }
+
+      const newUrl = result.url!
+      setCurrentMedia(newUrl)
+
+      // Guardamos en el historial de la sesión actual
+      setHistory(prev => [
+        { url: newUrl, script: scriptText, timestamp: new Date().toLocaleTimeString() },
+        ...prev
       ])
-
-    if (insertError) {
-      throw new Error(`Error al guardar en la base de datos: ${insertError.message}`)
+    } catch (error: any) {
+      console.error('Error en Studio:', error)
+      setErrorMsg(error.message || 'Ocurrió un error inesperado en la producción.')
+    } finally {
+      setLoading(false)
     }
-
-    return { success: true, subdomain: formData.subdomain, country: formData.country }
-
-  } catch (err: any) {
-    console.error('[Action Error] createSiteAction:', err.message)
-    return { success: false, error: err.message }
-  }
-}
-
-// ==========================================
-// 1. MÓDULO DE VOZ ULTRA PRO (ElevenLabs)
-// ==========================================
-async function generateVoiceBuffer(text: string, voiceId: string = '21m00Tcm4TlvDq8ikWAM'): Promise<Buffer> {
-  const apiKey = process.env.ELEVENLABS_API_KEY;
-  if (!apiKey) {
-    throw new Error('Falta la credencial ELEVENLABS_API_KEY en el entorno de producción.');
   }
 
-  const response = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`, {
-    method: 'POST',
-    headers: {
-      'Accept': 'audio/mpeg',
-      'Content-Type': 'application/json',
-      'xi-api-key': apiKey,
-    },
-    body: JSON.stringify({
-      text,
-      model_id: 'eleven_multilingual_v2',
-      voice_settings: { stability: 0.5, similarity_boost: 0.75 },
-    }),
-  });
-
-  if (!response.ok) {
-    const errorData = await response.text();
-    throw new Error(`Fallo en ElevenLabs API (${response.status}): ${errorData}`);
+  const copyToClipboard = (url: string) => {
+    navigator.clipboard.writeText(url)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
   }
 
-  const arrayBuffer = await response.arrayBuffer();
-  return Buffer.from(arrayBuffer);
-}
-
-// ==========================================
-// 2. MÓDULO DE ALMACENAMIENTO CLOUD (Bunny.net)
-// ==========================================
-async function uploadBufferToBunny(fileBuffer: Buffer, fileName: string): Promise<string> {
-  const storageZoneName = process.env.BUNNY_STORAGE_ZONE_NAME;
-  const storagePassword = process.env.BUNNY_STORAGE_PASSWORD;
-  const storageHost = process.env.BUNNY_STORAGE_HOST || 'storage.bunnycdn.com';
-  // Soporte para CDN personalizada o Pull Zone configurada en variables de entorno
-  const cdnHostname = process.env.BUNNY_CDN_HOSTNAME || `${storageZoneName}.b-cdn.net`;
-
-  if (!storageZoneName || !storagePassword) {
-    throw new Error('Faltan las credenciales de Bunny.net (Storage Zone Name o Password) en las variables de entorno.');
+  const shareOnWhatsApp = (url: string, script: string) => {
+    const text = encodeURIComponent(`¡Mira este contenido generado en Vartens Studio Pro!\n\n"${script}"\n\nEscúchalo aquí: ${url}`)
+    window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank')
   }
 
-  const uploadUrl = `https://${storageHost}/${storageZoneName}/${fileName}`;
+  return (
+    <main className="min-h-screen bg-slate-950 text-white p-6 md:p-12">
+      <div className="max-w-4xl mx-auto">
+        <div className="mb-8 text-center">
+          <span className="text-cyan-400 text-xs font-semibold tracking-wider uppercase bg-cyan-500/10 px-3 py-1 rounded-full border border-cyan-500/20">
+            Vartens Studio Pro • Motor de IA y CDN Global
+          </span>
+          <h1 className="text-3xl md:text-4xl font-extrabold mt-4">
+            Generador Todo en Uno con <span className="text-cyan-400">ElevenLabs & Bunny.net</span>
+          </h1>
+        </div>
 
-  const response = await fetch(uploadUrl, {
-    method: 'PUT',
-    headers: {
-      AccessKey: storagePassword,
-      'Content-Type': 'application/octet-stream',
-    },
-    body: fileBuffer as any,
-  });
+        {errorMsg && (
+          <div className="mb-6 bg-red-500/10 border border-red-500/20 text-red-400 p-4 rounded-xl text-sm">
+            {errorMsg}
+          </div>
+        )}
 
-  if (!response.ok) {
-    const errorBody = await response.text();
-    throw new Error(`Fallo al subir a Bunny.net Storage (${response.status}): ${response.statusText} - ${errorBody}`);
-  }
+        {/* Formulario de Entrada / Prompt */}
+        <form onSubmit={handleGenerateMedia} className="bg-slate-900 border border-slate-800 p-6 md:p-10 rounded-2xl shadow-xl space-y-6">
+          
+          <div>
+            <label className="block text-sm font-medium text-slate-300 mb-2">Seleccionar Perfil de Voz IA</label>
+            <select 
+              value={voiceId}
+              onChange={(e) => setVoiceId(e.target.value)}
+              className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cyan-500 transition text-sm"
+            >
+              <option value="21m00Tcm4TlvDq8ikWAM">Rachel (Clásica / Clara)</option>
+              <option value="AZnzlk1XvdvUeBnXmlld">Domi (Dinámica / Comercial)</option>
+              <option value="EXAVITQu4vr4xnSDxMaL">Bella (Suave / Narrativa)</option>
+              <option value="ErXwobaYiN019PkySvjV">Antoni (Masculina / Profesional)</option>
+            </select>
+          </div>
 
-  // Retorna la URL pública optimizada por CDN de producción
-  return `https://${cdnHostname}/${fileName}`;
-}
+          <div>
+            <label className="block text-sm font-medium text-slate-300 mb-2">Escribe tu Prompt o Guion Completo</label>
+            <textarea 
+              rows={5}
+              required
+              placeholder="Ej: Hola a todos, hoy lanzamos nuestra nueva plataforma con envíos a todo el país..."
+              value={scriptText}
+              onChange={(e) => setScriptText(e.target.value)}
+              className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cyan-500 transition text-sm"
+            />
+          </div>
 
-// ==========================================
-// 3. ORQUESTADOR MAESTRO DE PRODUCCIÓN (IA + CDN)
-// ==========================================
-export async function processAndStoreMediaAction(textScript: string, customFileName?: string) {
-  try {
-    if (!textScript || textScript.trim() === '') {
-      throw new Error('El guion de texto proporcionado para la síntesis multimedia está vacío.');
-    }
+          <button 
+            type="submit" 
+            disabled={loading}
+            className="w-full bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold py-4 rounded-xl transition shadow-lg shadow-cyan-500/20 disabled:opacity-50 cursor-pointer text-base flex items-center justify-center space-x-2"
+          >
+            {loading ? (
+              <>
+                <svg className="animate-spin h-5 w-5 text-slate-950" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                <span>Procesando y subiendo a la nube de Bunny...</span>
+              </>
+            ) : (
+              'Generar Contenido en Pantalla'
+            )}
+          </button>
+        </form>
 
-    // Generador de identificador único a prueba de colisiones
-    const sanitizedFileName = customFileName 
-      ? customFileName.replace(/[^a-zA-Z0-9-_]/g, '_') 
-      : `media_${Date.now()}_${Math.random().toString(36.substring(2, 7))}.mp3`;
+        {/* Reproductor Activo en Pantalla y Botones de Redes Sociales */}
+        {currentMedia && (
+          <div className="mt-8 bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-xl space-y-4 animate-fadeIn">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+              <h3 className="text-lg font-semibold text-cyan-400">¡Contenido Listo en Pantalla!</h3>
+              <div className="flex gap-2 w-full sm:w-auto">
+                <button 
+                  onClick={() => copyToClipboard(currentMedia)}
+                  className="flex-1 sm:flex-none bg-slate-800 hover:bg-slate-700 text-xs px-3 py-2 rounded-lg text-slate-300 transition"
+                >
+                  {copied ? '¡Enlace copiado!' : 'Copiar URL CDN'}
+                </button>
+                <button 
+                  onClick={() => shareOnWhatsApp(currentMedia, scriptText)}
+                  className="flex-1 sm:flex-none bg-emerald-600 hover:bg-emerald-500 text-xs px-3 py-2 rounded-lg text-white font-medium transition flex items-center justify-center gap-1"
+                >
+                  Compartir en WhatsApp
+                </button>
+              </div>
+            </div>
+            
+            <p className="text-xs text-slate-400 break-all bg-slate-950 p-3 rounded-lg border border-slate-800">
+              {currentMedia}
+            </p>
+            
+            <div className="pt-2">
+              <audio controls className="w-full">
+                <source src={currentMedia} type="audio/mpeg" />
+                Tu navegador no soporta el elemento de reproducción.
+              </audio>
+            </div>
+          </div>
+        )}
 
-    console.info(`[Media Pipeline] Iniciando síntesis de voz (ElevenLabs) para archivo: ${sanitizedFileName}`);
-    const audioBuffer = await generateVoiceBuffer(textScript);
-
-    console.info(`[Media Pipeline] Subiendo activo multimedia a la nube (Bunny.net)...`);
-    const publicCdnUrl = await uploadBufferToBunny(audioBuffer, sanitizedFileName);
-
-    console.info(`[Media Pipeline] Éxito total. Recurso disponible en: ${publicCdnUrl}`);
-    return { success: true, url: publicCdnUrl };
-
-  } catch (err: any) {
-    console.error('[Pipeline Error Critical] processAndStoreMediaAction:', err.message);
-    return { success: false, error: err.message };
-  }
+        {/* Historial de Sesión */}
+        {history.length > 1 && (
+          <div className="mt-10 bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-xl space-y-4">
+            <h3 className="text-md font-semibold text-slate-300">Historial Reciente de Producción</h3>
+            <div className="space-y-3 max-h-60 overflow-y-auto pr-2">
+              {history.slice(1).map((item, idx) => (
+                <div key={idx} className="bg-slate-950 p-3 rounded-xl border border-slate-800 flex items-center justify-between gap-4">
+                  <div className="truncate">
+                    <p className="text-xs text-slate-400 truncate">&ldquo;{item.script}&rdquo;</p>
+                    <span className="text-[10px] text-cyan-500">{item.timestamp}</span>
+                  </div>
+                  <div className="flex gap-2">
+                    <a 
+                      href={item.url} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="bg-slate-800 hover:bg-slate-700 text-xs px-3 py-1.5 rounded-lg text-white transition"
+                    >
+                      Abrir
+                    </a>
+                    <button 
+                      onClick={() => shareOnWhatsApp(item.url, item.script)}
+                      className="bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-400 text-xs px-3 py-1.5 rounded-lg transition"
+                    >
+                      WhatsApp
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </main>
+  )
 }
