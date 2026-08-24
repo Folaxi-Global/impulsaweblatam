@@ -17,14 +17,18 @@ export async function createSiteAction(formData: {
   template: string
 }) {
   try {
+    if (!formData.subdomain) {
+      return { success: false, error: 'El subdominio es obligatorio.' }
+    }
+
     const { data: existingSite, error: checkError } = await supabase
       .from('sites')
       .select('id')
       .eq('subdomain', formData.subdomain)
-      .single()
+      .maybeSingle()
 
     if (existingSite) {
-      throw new Error('Este subdominio ya está en uso. Por favor, elige otro.')
+      return { success: false, error: 'Este subdominio ya está en uso. Por favor, elige otro.' }
     }
 
     const { error: insertError } = await supabase
@@ -44,13 +48,14 @@ export async function createSiteAction(formData: {
       ])
 
     if (insertError) {
-      throw new Error(`Error al guardar en la base de datos: ${insertError.message}`)
+      console.error('Supabase Insert Error:', insertError.message)
+      return { success: false, error: `Error al guardar en la base de datos: ${insertError.message}` }
     }
 
     return { success: true, subdomain: formData.subdomain, country: formData.country }
 
   } catch (err: any) {
     console.error('[Action Error] createSiteAction:', err.message)
-    return { success: false, error: err.message }
+    return { success: false, error: err.message || 'Error inesperado en el servidor.' }
   }
 }
