@@ -13,7 +13,8 @@ export default function RootLayout({
   return (
     <html lang="es">
       <head>
-        {/* Sin scripts externos de CDN, Tailwind se compila de forma nativa */}
+        {/* Script oficial de Tailwind CSS por CDN para garantizar estilos inmediatos */}
+        <script src="https://cdn.tailwindcss.com"></script>
       </head>
       <body className="bg-slate-950 text-white min-h-screen">
         {children}
