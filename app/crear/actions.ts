@@ -18,7 +18,6 @@ export async function createSiteAction(formData: {
   template: string
 }) {
   try {
-    // 1. Validar que el subdominio no esté repetido en la base de datos
     const { data: existingSite, error: checkError } = await supabase
       .from('sites')
       .select('id')
@@ -29,7 +28,6 @@ export async function createSiteAction(formData: {
       throw new Error('Este subdominio ya está en uso. Por favor, elige otro.')
     }
 
-    // 2. Insertar el nuevo sitio web en la tabla 'sites' con estado pendiente
     const { error: insertError } = await supabase
       .from('sites')
       .insert([
@@ -59,39 +57,90 @@ export async function createSiteAction(formData: {
 }
 
 // ==========================================
-// NUEVA FUNCIÓN: Subida de archivos a Bunny.net
+// 1. MÓDULO DE VOZ (ElevenLabs)
 // ==========================================
-export async function uploadVideoToBunnyAction(fileBuffer: Buffer, fileName: string) {
+async function generateVoiceBuffer(text: string, voiceId: string = '21m00Tcm4TlvDq8ikWAM') {
+  const apiKey = process.env.ELEVENLABS_API_KEY;
+  if (!apiKey) {
+    throw new Error('Falta la clave de ElevenLabs en las variables de entorno (ELEVENLABS_API_KEY).');
+  }
+
+  const response = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`, {
+    method: 'POST',
+    headers: {
+      'Accept': 'audio/mpeg',
+      'Content-Type': 'application/json',
+      'xi-api-key': apiKey,
+    },
+    body: JSON.stringify({
+      text,
+      model_id: 'eleven_multilingual_v2',
+      voice_settings: { stability: 0.5, similarity_boost: 0.75 },
+    }),
+  });
+
+  if (!response.ok) {
+    const errorData = await response.text();
+    throw new Error(`Error en ElevenLabs API: ${errorData}`);
+  }
+
+  const arrayBuffer = await response.arrayBuffer();
+  return Buffer.from(arrayBuffer);
+}
+
+// ==========================================
+// 2. MÓDULO DE ALMACENAMIENTO (Bunny.net)
+// ==========================================
+async function uploadBufferToBunny(fileBuffer: Buffer, fileName: string) {
+  const storageZoneName = process.env.BUNNY_STORAGE_ZONE_NAME;
+  const storagePassword = process.env.BUNNY_STORAGE_PASSWORD;
+  const storageHost = process.env.BUNNY_STORAGE_HOST || 'storage.bunnycdn.com';
+
+  if (!storageZoneName || !storagePassword) {
+    throw new Error('Faltan las credenciales de Bunny.net en las variables de entorno.');
+  }
+
+  const url = `https://${storageHost}/${storageZoneName}/${fileName}`;
+
+  const response = await fetch(url, {
+    method: 'PUT',
+    headers: {
+      AccessKey: storagePassword,
+      'Content-Type': 'application/octet-stream',
+    },
+    body: fileBuffer as any,
+  });
+
+  if (!response.ok) {
+    throw new Error(`Error al subir a Bunny.net Storage: ${response.statusText}`);
+  }
+
+  return `https://${storageZoneName}.b-cdn.net/${fileName}`;
+}
+
+// ==========================================
+// 3. ORQUESTADOR MAESTRO (Une IA + Cloud Storage)
+// ==========================================
+export async function processAndStoreMediaAction(textScript: string, customFileName?: string) {
   try {
-    const storageZoneName = process.env.BUNNY_STORAGE_ZONE_NAME;
-    const storagePassword = process.env.BUNNY_STORAGE_PASSWORD;
-    const storageHost = process.env.BUNNY_STORAGE_HOST || 'storage.bunnycdn.com';
-
-    if (!storageZoneName || !storagePassword) {
-      throw new Error('Faltan las credenciales de Bunny.net en las variables de entorno.');
+    if (!textScript || textScript.trim() === '') {
+      throw new Error('El guion de texto no puede estar vacío.');
     }
 
-    const url = `https://${storageHost}/${storageZoneName}/${fileName}`;
+    // Paso A: Generar nombre de archivo único basado en timestamp
+    const fileName = customFileName || `audio_${Date.now()}.mp3`;
 
-    const response = await fetch(url, {
-      method: 'PUT',
-      headers: {
-        AccessKey: storagePassword,
-        'Content-Type': 'application/octet-stream',
-      },
-      body: fileBuffer,
-    });
+    console.log('Iniciando síntesis de voz con ElevenLabs...');
+    const audioBuffer = await generateVoiceBuffer(textScript);
 
-    if (!response.ok) {
-      throw new Error(`Error al subir a Bunny.net: ${response.statusText}`);
-    }
+    console.log('Subiendo archivo resultante a Bunny.net Storage...');
+    const publicUrl = await uploadBufferToBunny(audioBuffer, fileName);
 
-    // Retorna la URL pública utilizando el dominio de tu zona (o tu CDN vinculada)
-    const publicUrl = `https://${storageZoneName}.b-cdn.net/${fileName}`;
+    console.log('¡Proceso completado con éxito!', publicUrl);
     return { success: true, url: publicUrl };
 
   } catch (err: any) {
-    console.error('Error en uploadVideoToBunnyAction:', err.message);
+    console.error('Error en processAndStoreMediaAction:', err.message);
     return { success: false, error: err.message };
   }
 }
