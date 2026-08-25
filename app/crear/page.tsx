@@ -8,6 +8,8 @@ export default function CrearWebPage() {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
   const [errorMsg, setErrorMsg] = useState('')
+  const [step, setStep] = useState<'form' | 'preview'>('form')
+  
   const [formData, setFormData] = useState({
     businessName: '',
     subdomain: '',
@@ -15,7 +17,7 @@ export default function CrearWebPage() {
     country: 'CL',
     whatsapp: '',
     description: '',
-    template: 'profesional' // Valor por defecto que coincide con tu tabla
+    template: 'profesional'
   })
 
   const handleSubdomainChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -23,7 +25,7 @@ export default function CrearWebPage() {
     setFormData({ ...formData, subdomain: value })
   }
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleGeneratePreview = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
     setErrorMsg('')
@@ -33,14 +35,16 @@ export default function CrearWebPage() {
         throw new Error('El subdominio debe tener al menos 3 caracteres válidos.')
       }
 
+      // Guardamos de manera preliminar en Supabase o pasamos a la vista previa
       const result = await createSiteAction(formData)
 
       if (!result.success) {
         throw new Error(result.error || 'Error al registrar el sitio web.')
       }
 
-      // Redirige al flujo de pago por mantenimiento semestral tal como planeaste
-      router.push(`/checkout?subdomain=${result.subdomain}&country=${result.country}`)
+      // Cambiamos al paso de vista previa en vivo
+      setStep('preview')
+      setLoading(false)
     } catch (error: any) {
       console.error('Error al procesar el formulario:', error)
       setErrorMsg(error.message || 'Ocurrió un error al crear la web. Inténtalo de nuevo.')
@@ -48,6 +52,72 @@ export default function CrearWebPage() {
     }
   }
 
+  const handleProceedToCheckout = () => {
+    router.push(`/checkout?subdomain=${formData.subdomain}&country=${formData.country}`)
+  }
+
+  // --- VISTA PREVIA EN VIVO DE LA WEB DEL CLIENTE ---
+  if (step === 'preview') {
+    return (
+      <div className="min-h-screen bg-slate-950 text-white relative">
+        {/* Barra flotante superior de conversión */}
+        <div className="sticky top-0 z-50 bg-slate-900/90 border-b border-cyan-500/30 backdrop-blur-md px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-xl">
+          <div className="flex items-center gap-3">
+            <span className="w-3 h-3 rounded-full bg-cyan-400 animate-pulse" />
+            <div>
+              <p className="text-sm font-bold">Vista Previa: <span className="text-cyan-400">{formData.subdomain}.impulsaweblatam.com</span></p>
+              <p className="text-xs text-slate-400">Plantilla seleccionada: <span className="uppercase text-slate-200">{formData.template}</span></p>
+            </div>
+          </div>
+          <div className="flex items-center gap-3">
+            <button 
+              onClick={() => setStep('form')}
+              className="text-xs text-slate-400 hover:text-white px-3 py-2 transition"
+            >
+              ← Modificar datos
+            </button>
+            <button 
+              onClick={handleProceedToCheckout}
+              className="bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-extrabold px-6 py-2.5 rounded-xl text-xs md:text-sm transition shadow-lg shadow-cyan-500/25 cursor-pointer"
+            >
+              ¡Me encanta! Activar web ($18 USD) →
+            </button>
+          </div>
+        </div>
+
+        {/* Renderizado de la Plantilla en Vivo */}
+        <div className="max-w-4xl mx-auto p-6 md:p-12 space-y-12">
+          <div className="text-center space-y-4 pt-8 border-b border-slate-900 pb-12">
+            <span className="bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 text-xs px-3 py-1 rounded-full uppercase font-semibold">
+              {formData.category}
+            </span>
+            <h1 className="text-4xl md:text-6xl font-black tracking-tight">{formData.businessName || 'Tu Negocio'}</h1>
+            <p className="text-slate-400 text-lg max-w-xl mx-auto">{formData.description || 'Aquí irá la descripción detallada de lo que ofrece tu marca a los clientes.'}</p>
+          </div>
+
+          {/* Tarjeta de demostración según la plantilla */}
+          <div className="bg-slate-900/60 border border-slate-800 p-8 rounded-2xl space-y-6">
+            <h3 className="text-xl font-bold text-cyan-400">Sección principal de tu {formData.template}</h3>
+            <p className="text-sm text-slate-300 leading-relaxed">
+              Este es un vistazo de cómo tus clientes visualizarán tu plataforma digital en computadores y dispositivos móviles. Todos los elementos están optimizados para conversión directa.
+            </p>
+            <div className="pt-4 flex gap-4">
+              <span className="bg-cyan-500 text-slate-950 px-5 py-2.5 rounded-xl font-bold text-sm">Contactar por WhatsApp</span>
+            </div>
+          </div>
+
+          {/* Botón flotante simulado de WhatsApp */}
+          {formData.whatsapp && (
+            <div className="fixed bottom-6 right-6 bg-emerald-500 text-slate-950 p-4 rounded-full shadow-2xl flex items-center gap-2 font-bold text-sm cursor-pointer hover:bg-emerald-400 transition z-40">
+              💬 Escribir al {formData.whatsapp}
+            </div>
+          )}
+        </div>
+      </div>
+    )
+  }
+
+  // --- FORMULARIO DE CREACIÓN Y SELECCIÓN DE PLANTILLA ---
   return (
     <main className="min-h-screen bg-slate-950 text-white p-6 md:p-12 selection:bg-cyan-500 selection:text-slate-950">
       <div className="max-w-3xl mx-auto">
@@ -66,7 +136,7 @@ export default function CrearWebPage() {
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="bg-slate-900 border border-slate-800 p-6 md:p-10 rounded-2xl shadow-xl space-y-6">
+        <form onSubmit={handleGeneratePreview} className="bg-slate-900 border border-slate-800 p-6 md:p-10 rounded-2xl shadow-xl space-y-6">
           
           {/* Selección de Plantilla */}
           <div>
@@ -172,10 +242,10 @@ export default function CrearWebPage() {
                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
-                <span>Guardando sitio web...</span>
+                <span>Generando vista previa...</span>
               </>
             ) : (
-              'Guardar y Continuar al Mantenimiento ($18 USD)'
+              'Ver Vista Previa de mi Web'
             )}
           </button>
         </form>
