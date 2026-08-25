@@ -15,7 +15,7 @@ export default function CrearWebPage() {
     country: 'CL',
     whatsapp: '',
     description: '',
-    template: 'profesional'
+    template: 'profesional' // Valor por defecto que coincide con tu tabla
   })
 
   const handleSubdomainChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -39,6 +39,7 @@ export default function CrearWebPage() {
         throw new Error(result.error || 'Error al registrar el sitio web.')
       }
 
+      // Redirige al flujo de pago por mantenimiento semestral tal como planeaste
       router.push(`/checkout?subdomain=${result.subdomain}&country=${result.country}`)
     } catch (error: any) {
       console.error('Error al procesar el formulario:', error)
@@ -66,6 +67,32 @@ export default function CrearWebPage() {
         )}
 
         <form onSubmit={handleSubmit} className="bg-slate-900 border border-slate-800 p-6 md:p-10 rounded-2xl shadow-xl space-y-6">
+          
+          {/* Selección de Plantilla */}
+          <div>
+            <label className="block text-sm font-medium text-slate-300 mb-3">Elige tu Plantilla Base</label>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              {[
+                { id: 'profesional', name: 'Profesional & Minimalista', desc: 'Ideal para servicios y consultorías' },
+                { id: 'tienda', name: 'Comercio / Tienda Online', desc: 'Enfoque en catálogo y productos' },
+                { id: 'gastronomia', name: 'Gastronomía & Menú', desc: 'Diseño visual para restaurantes' }
+              ].map((t) => (
+                <div 
+                  key={t.id}
+                  onClick={() => setFormData({...formData, template: t.id})}
+                  className={`p-4 rounded-xl border cursor-pointer transition ${
+                    formData.template === t.id 
+                      ? 'bg-cyan-500/10 border-cyan-500 text-white shadow-md' 
+                      : 'bg-slate-950 border-slate-800 text-slate-400 hover:border-slate-700'
+                  }`}
+                >
+                  <div className="font-bold text-sm text-white mb-1">{t.name}</div>
+                  <div className="text-xs text-slate-400">{t.desc}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+
           <div>
             <label className="block text-sm font-medium text-slate-300 mb-2">Nombre de tu Negocio o Marca</label>
             <input 
@@ -100,6 +127,7 @@ export default function CrearWebPage() {
               <label className="block text-sm font-medium text-slate-300 mb-2">WhatsApp de contacto</label>
               <input 
                 type="text" 
+                required
                 placeholder="+56912345678"
                 value={formData.whatsapp}
                 onChange={(e) => setFormData({...formData, whatsapp: e.target.value})}
@@ -125,6 +153,7 @@ export default function CrearWebPage() {
             <label className="block text-sm font-medium text-slate-300 mb-2">Breve descripción del negocio</label>
             <textarea 
               rows={3}
+              required
               placeholder="¿Qué ofrece tu marca a los clientes?"
               value={formData.description}
               onChange={(e) => setFormData({...formData, description: e.target.value})}
