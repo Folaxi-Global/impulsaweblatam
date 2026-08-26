@@ -8,7 +8,7 @@ import { createSiteAction } from './actions'
 
 function TemplateAbogados({ data }: { data: any }) {
   return (
-    <div className="bg-slate-900 border border-slate-800 rounded-3xl p-8 md:p-12 space-y-10 text-slate-100 shadow-2xl">
+    <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 md:p-12 space-y-8 text-slate-100 shadow-2xl">
       <div className="text-center space-y-4 max-w-2xl mx-auto">
         <span className="text-amber-400 text-xs font-semibold tracking-widest uppercase border border-amber-400/30 px-3 py-1 rounded-full bg-amber-400/10">
           Estudio Jurídico & Asesoría Legal
@@ -17,8 +17,8 @@ function TemplateAbogados({ data }: { data: any }) {
         <p className="text-slate-300 text-sm md:text-base leading-relaxed">{data.description || 'Defendemos tus derechos con experiencia, confidencialidad y compromiso legal.'}</p>
         <div className="pt-2">
           {data.whatsapp && (
-            <a href={`https://wa.me/${data.whatsapp}`} target="_blank" rel="noopener noreferrer" className="inline-block bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-6 py-3 rounded-xl text-sm transition">
-              Agendar Consulta Legal
+            <a href={`https://wa.me/${data.whatsapp}`} target="_blank" rel="noopener noreferrer" className="inline-block bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-6 py-3 rounded-xl text-sm transition shadow-lg shadow-amber-500/20">
+              📅 Agendar Consulta Legal
             </a>
           )}
         </div>
@@ -44,7 +44,7 @@ function TemplateAbogados({ data }: { data: any }) {
 
 function TemplateBarberia({ data }: { data: any }) {
   return (
-    <div className="bg-neutral-950 border border-neutral-800 rounded-3xl p-8 md:p-12 space-y-10 text-neutral-100 shadow-2xl">
+    <div className="bg-neutral-950 border border-neutral-800 rounded-3xl p-6 md:p-12 space-y-8 text-neutral-100 shadow-2xl">
       <div className="text-center space-y-4 max-w-2xl mx-auto">
         <span className="text-cyan-400 text-xs font-black tracking-widest uppercase border border-cyan-400/30 px-3 py-1 rounded-full bg-cyan-400/10">
           Barbershop & Estilo
@@ -53,8 +53,8 @@ function TemplateBarberia({ data }: { data: any }) {
         <p className="text-neutral-400 text-sm md:text-base">{data.description || 'Cortes clásicos, perfilado de barba y el mejor estilo para potenciar tu imagen.'}</p>
         <div className="pt-2">
           {data.whatsapp && (
-            <a href={`https://wa.me/${data.whatsapp}`} target="_blank" rel="noopener noreferrer" className="inline-block bg-cyan-400 hover:bg-cyan-300 text-black font-extrabold px-6 py-3 rounded-xl text-sm transition">
-              Reservar Turno por WhatsApp
+            <a href={`https://wa.me/${data.whatsapp}`} target="_blank" rel="noopener noreferrer" className="inline-block bg-cyan-400 hover:bg-cyan-300 text-black font-extrabold px-6 py-3 rounded-xl text-sm transition shadow-lg shadow-cyan-400/20">
+              ✂️ Reservar Turno por WhatsApp
             </a>
           )}
         </div>
@@ -80,7 +80,7 @@ function TemplateBarberia({ data }: { data: any }) {
 
 function TemplatePanaderia({ data }: { data: any }) {
   return (
-    <div className="bg-orange-950/20 border border-orange-900/30 rounded-3xl p-8 md:p-12 space-y-10 text-orange-50 shadow-2xl">
+    <div className="bg-orange-950/20 border border-orange-900/30 rounded-3xl p-6 md:p-12 space-y-8 text-orange-50 shadow-2xl">
       <div className="text-center space-y-4 max-w-2xl mx-auto">
         <span className="text-orange-400 text-xs font-semibold tracking-widest uppercase border border-orange-400/30 px-3 py-1 rounded-full bg-orange-400/10">
           Horneado Artesanal Diario
@@ -89,8 +89,8 @@ function TemplatePanaderia({ data }: { data: any }) {
         <p className="text-orange-200/80 text-sm md:text-base">{data.description || 'El aroma y sabor tradicional del pan recién salido del horno, masas madre y repostería casera.'}</p>
         <div className="pt-2">
           {data.whatsapp && (
-            <a href={`https://wa.me/${data.whatsapp}`} target="_blank" rel="noopener noreferrer" className="inline-block bg-orange-500 hover:bg-orange-400 text-slate-950 font-bold px-6 py-3 rounded-xl text-sm transition">
-              Hacer Pedido por WhatsApp
+            <a href={`https://wa.me/${data.whatsapp}`} target="_blank" rel="noopener noreferrer" className="inline-block bg-orange-500 hover:bg-orange-400 text-slate-950 font-bold px-6 py-3 rounded-xl text-sm transition shadow-lg shadow-orange-500/20">
+              🥖 Hacer Pedido por WhatsApp
             </a>
           )}
         </div>
@@ -121,6 +121,7 @@ export default function CrearWebPage() {
   const [loading, setLoading] = useState(false)
   const [errorMsg, setErrorMsg] = useState('')
   const [step, setStep] = useState<'form' | 'preview'>('form')
+  const [previewDevice, setPreviewDevice] = useState<'desktop' | 'mobile'>('desktop')
   
   const [formData, setFormData] = useState({
     businessName: '',
@@ -132,7 +133,6 @@ export default function CrearWebPage() {
     template: 'abogados'
   })
 
-  // Función inteligente para sincronizar la categoría automáticamente al elegir plantilla
   const handleTemplateSelect = (templateId: string) => {
     let matchedCategory = 'servicios'
     if (templateId === 'barberia') matchedCategory = 'salud'
@@ -179,18 +179,40 @@ export default function CrearWebPage() {
     router.push(`/checkout?subdomain=${formData.subdomain}&country=${formData.country}`)
   }
 
-  // --- VISTA PREVIA EN VIVO ---
+  // --- VISTA PREVIA EN VIVO CON SELECTOR DE DISPOSITIVO ---
   if (step === 'preview') {
     return (
       <div className="min-h-screen bg-slate-950 text-white relative pb-20">
-        <div className="sticky top-0 z-50 bg-slate-900/90 border-b border-cyan-500/30 backdrop-blur-md px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-xl">
+        {/* Barra superior de control */}
+        <div className="sticky top-0 z-50 bg-slate-900/95 border-b border-cyan-500/30 backdrop-blur-md px-6 py-4 flex flex-col md:flex-row items-center justify-between gap-4 shadow-xl">
           <div className="flex items-center gap-3">
             <span className="w-3 h-3 rounded-full bg-cyan-400 animate-pulse" />
             <div>
               <p className="text-sm font-bold">Vista Previa: <span className="text-cyan-400">{formData.subdomain}.impulsaweblatam.com</span></p>
-              <p className="text-xs text-slate-400">Estilo seleccionado: <span className="uppercase text-slate-200">{formData.template}</span></p>
+              <p className="text-xs text-slate-400">Estilo: <span className="uppercase text-slate-200">{formData.template}</span></p>
             </div>
           </div>
+
+          {/* Selector de Dispositivo (Escritorio / Móvil) */}
+          <div className="flex items-center bg-slate-950 border border-slate-800 p-1 rounded-xl">
+            <button
+              onClick={() => setPreviewDevice('desktop')}
+              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition cursor-pointer ${
+                previewDevice === 'desktop' ? 'bg-cyan-500 text-slate-950 shadow' : 'text-slate-400 hover:text-white'
+              }`}
+            >
+              💻 Computador
+            </button>
+            <button
+              onClick={() => setPreviewDevice('mobile')}
+              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition cursor-pointer ${
+                previewDevice === 'mobile' ? 'bg-cyan-500 text-slate-950 shadow' : 'text-slate-400 hover:text-white'
+              }`}
+            >
+              📱 Celular
+            </button>
+          </div>
+
           <div className="flex items-center gap-3">
             <button 
               onClick={() => setStep('form')}
@@ -207,12 +229,18 @@ export default function CrearWebPage() {
           </div>
         </div>
 
-        <div className="max-w-4xl mx-auto p-6 md:p-12 space-y-12">
-          {formData.template === 'abogados' && <TemplateAbogados data={formData} />}
-          {formData.template === 'barberia' && <TemplateBarberia data={formData} />}
-          {formData.template === 'panaderia' && <TemplatePanaderia data={formData} />}
+        {/* Contenedor Adaptativo de Vista Previa */}
+        <div className={`mx-auto p-4 md:p-8 transition-all duration-300 ${
+          previewDevice === 'mobile' ? 'max-w-md' : 'max-w-4xl'
+        }`}>
+          <div className={previewDevice === 'mobile' ? 'border-4 border-slate-800 rounded-[40px] overflow-hidden bg-slate-950 shadow-2xl p-2' : ''}>
+            {formData.template === 'abogados' && <TemplateAbogados data={formData} />}
+            {formData.template === 'barberia' && <TemplateBarberia data={formData} />}
+            {formData.template === 'panaderia' && <TemplatePanaderia data={formData} />}
+          </div>
         </div>
 
+        {/* Botón flotante de WhatsApp */}
         {formData.whatsapp && (
           <a 
             href={`https://wa.me/${formData.whatsapp}`}
@@ -254,16 +282,16 @@ export default function CrearWebPage() {
             <label className="block text-sm font-medium text-slate-300 mb-3">Elige tu Plantilla por Rubro</label>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               {[
-                { id: 'abogados', name: '⚖️ Abogados y Servicios Legales', desc: 'Formal, serio y enfocado en confianza y citas' },
-                { id: 'barberia', name: '✂️ Barbería y Estética', desc: 'Diseño moderno, oscuro y visual para reservas' },
-                { id: 'panaderia', name: '🥖 Panadería y Gastronomía', desc: 'Cálido, apetitoso y enfocado en productos' }
+                { id: 'abogados', name: '⚖️ Abogados', desc: 'Formal y enfocado en confianza y citas' },
+                { id: 'barberia', name: '✂️ Barbería', desc: 'Moderno y visual para reservas' },
+                { id: 'panaderia', name: '🥖 Panadería', desc: 'Cálido y enfocado en productos' }
               ].map((t) => (
                 <div 
                   key={t.id}
                   onClick={() => handleTemplateSelect(t.id)}
                   className={`p-4 rounded-xl border cursor-pointer transition ${
                     formData.template === t.id 
-                      ? 'bg-cyan-500/10 border-cyan-500 text-white shadow-md' 
+                      ? 'bg-cyan-500/10 border-cyan-500 text-white shadow-md shadow-cyan-500/10' 
                       : 'bg-slate-950 border-slate-800 text-slate-400 hover:border-slate-700'
                   }`}
                 >
