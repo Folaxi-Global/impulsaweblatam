@@ -9,7 +9,6 @@ import { createSiteAction } from './actions'
 function TemplateAbogados({ data }: { data: any }) {
   return (
     <div className="bg-slate-950 border border-slate-800 rounded-3xl overflow-hidden shadow-2xl text-slate-100 font-sans">
-      {/* Header Ficticio de la Web */}
       <header className="bg-slate-900/80 backdrop-blur-md border-b border-slate-800 px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <span className="w-8 h-8 rounded-lg bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400 font-bold text-sm">⚖️</span>
@@ -22,7 +21,6 @@ function TemplateAbogados({ data }: { data: any }) {
         )}
       </header>
 
-      {/* Hero Section */}
       <div className="relative px-6 py-16 md:py-24 text-center space-y-6 bg-gradient-to-b from-slate-900/90 via-slate-950 to-slate-950">
         <div className="absolute top-10 left-1/2 -translate-x-1/2 w-72 h-32 bg-amber-500/10 blur-3xl pointer-events-none" />
         <span className="inline-block text-amber-400 text-xs font-semibold tracking-widest uppercase border border-amber-400/30 px-4 py-1.5 rounded-full bg-amber-400/10">
@@ -32,7 +30,7 @@ function TemplateAbogados({ data }: { data: any }) {
           {data.businessName || 'Protegemos sus derechos y su patrimonio'}
         </h1>
         <p className="text-slate-300 text-sm md:text-base max-w-2xl mx-auto leading-relaxed font-light">
-          {data.description || 'Brindamos soluciones legales estratégicas con un firme compromiso ético, experiencia comprobada y defensa rigurosa.'}
+          Brindamos soluciones legales estratégicas con un firme compromiso ético, experiencia comprobada y defensa rigurosa.
         </p>
         <div className="pt-4">
           {data.whatsapp && (
@@ -43,7 +41,6 @@ function TemplateAbogados({ data }: { data: any }) {
         </div>
       </div>
 
-      {/* Secciones de Especialidades */}
       <div className="px-6 py-12 bg-slate-950 border-t border-slate-900 space-y-8">
         <div className="text-center space-y-2">
           <h2 className="text-xs font-bold tracking-widest text-amber-400 uppercase">Áreas de Práctica</h2>
@@ -68,7 +65,6 @@ function TemplateAbogados({ data }: { data: any }) {
         </div>
       </div>
 
-      {/* Franja de Confianza / Testimonio */}
       <div className="px-6 py-12 bg-slate-900/40 border-t border-slate-900 text-center space-y-4">
         <div className="text-amber-400 text-sm tracking-widest">★★★★★</div>
         <p className="text-sm md:text-base text-slate-300 italic max-w-xl mx-auto">"Un equipo sumamente profesional. Me brindaron claridad legal y tranquilidad desde el primer momento."</p>
@@ -81,7 +77,6 @@ function TemplateAbogados({ data }: { data: any }) {
 function TemplateBarberia({ data }: { data: any }) {
   return (
     <div className="bg-neutral-950 border border-neutral-800 rounded-3xl overflow-hidden shadow-2xl text-neutral-100 font-sans">
-      {/* Header Ficticio */}
       <header className="bg-neutral-900/90 backdrop-blur-md border-b border-neutral-800 px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <span className="w-8 h-8 rounded-lg bg-cyan-400/20 border border-cyan-400/40 flex items-center justify-center text-cyan-400 font-bold text-sm">✂️</span>
@@ -94,7 +89,6 @@ function TemplateBarberia({ data }: { data: any }) {
         )}
       </header>
 
-      {/* Hero Section */}
       <div className="relative px-6 py-16 md:py-24 text-center space-y-6 bg-gradient-to-b from-neutral-900 via-neutral-950 to-neutral-950">
         <div className="absolute top-0 right-0 w-80 h-36 bg-cyan-500/10 blur-3xl pointer-events-none" />
         <span className="inline-block text-cyan-400 text-xs font-black tracking-widest uppercase border border-cyan-400/30 px-4 py-1.5 rounded-full bg-cyan-400/10">
@@ -104,7 +98,7 @@ function TemplateBarberia({ data }: { data: any }) {
           {data.businessName || 'Estilo, Actitud y Precisión'}
         </h1>
         <p className="text-neutral-400 text-sm md:text-base max-w-2xl mx-auto leading-relaxed">
-          {data.description || 'Cortes clásicos, degradados impecables, ritual de barba con toalla caliente y la mejor experiencia para potenciar tu imagen.'}
+          Cortes clásicos, degradados impecables, ritual de barba con toalla caliente y la mejor experiencia para potenciar tu imagen.
         </p>
         <div className="pt-4">
           {data.whatsapp && (
@@ -115,7 +109,6 @@ function TemplateBarberia({ data }: { data: any }) {
         </div>
       </div>
 
-      {/* Menú de Servicios */}
       <div className="px-6 py-12 bg-neutral-950 border-t border-neutral-900 space-y-8">
         <div className="text-center space-y-2">
           <h2 className="text-xs font-black tracking-widest text-cyan-400 uppercase">Servicios Populares</h2>
@@ -152,7 +145,6 @@ function TemplateBarberia({ data }: { data: any }) {
 function TemplatePanaderia({ data }: { data: any }) {
   return (
     <div className="bg-slate-950 border border-orange-900/30 rounded-3xl overflow-hidden shadow-2xl text-orange-50 font-sans">
-      {/* Header Ficticio */}
       <header className="bg-orange-950/40 backdrop-blur-md border-b border-orange-900/30 px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <span className="w-8 h-8 rounded-lg bg-orange-500/20 border border-orange-500/40 flex items-center justify-center text-orange-400 font-bold text-sm">🥖</span>
@@ -165,7 +157,6 @@ function TemplatePanaderia({ data }: { data: any }) {
         )}
       </header>
 
-      {/* Hero Section */}
       <div className="relative px-6 py-16 md:py-24 text-center space-y-6 bg-gradient-to-b from-orange-950/30 via-slate-950 to-slate-950">
         <div className="absolute top-10 left-1/2 -translate-x-1/2 w-80 h-36 bg-orange-500/10 blur-3xl pointer-events-none" />
         <span className="inline-block text-orange-400 text-xs font-semibold tracking-widest uppercase border border-orange-400/30 px-4 py-1.5 rounded-full bg-orange-400/10">
@@ -175,7 +166,7 @@ function TemplatePanaderia({ data }: { data: any }) {
           {data.businessName || 'El verdadero sabor del pan recién salido del horno'}
         </h1>
         <p className="text-orange-200/80 text-sm md:text-base max-w-2xl mx-auto leading-relaxed">
-          {data.description || 'Elaboramos masas madre de fermentación lenta, bollería de mantequilla pura y pastelería fina para endulzar tus días.'}
+          Elaboramos masas madre de fermentación lenta, bollería de mantequilla pura y pastelería fina para endulzar tus días.
         </p>
         <div className="pt-4">
           {data.whatsapp && (
@@ -186,7 +177,6 @@ function TemplatePanaderia({ data }: { data: any }) {
         </div>
       </div>
 
-      {/* Catálogo de Especialidades */}
       <div className="px-6 py-12 bg-slate-950 border-t border-orange-900/20 space-y-8">
         <div className="text-center space-y-2">
           <h2 className="text-xs font-bold tracking-widest text-orange-400 uppercase">Nuestras Creaciones</h2>
@@ -230,10 +220,11 @@ export default function CrearWebPage() {
     category: 'servicios',
     country: 'CL',
     whatsapp: '',
-    description: '',
+    description: '', // Se mantiene en el estado para enviarlo vacío o con un valor por defecto al backend
     template: 'abogados'
   })
 
+  // Sincronización automática de categoría y plantilla
   const handleTemplateSelect = (templateId: string) => {
     let matchedCategory = 'servicios'
     if (templateId === 'barberia') matchedCategory = 'salud'
@@ -261,7 +252,17 @@ export default function CrearWebPage() {
         throw new Error('El subdominio debe tener al menos 3 caracteres válidos.')
       }
 
-      const result = await createSiteAction(formData)
+      // Asignamos una descripción por defecto predeterminada según la plantilla elegida
+      let defaultDesc = 'Asesoría y servicios profesionales garantizados.'
+      if (formData.template === 'barberia') defaultDesc = 'Cortes modernos y estilo exclusivo.'
+      if (formData.template === 'panaderia') defaultDesc = 'Pan artesanal y repostería recién horneada.'
+
+      const payload = {
+        ...formData,
+        description: defaultDesc
+      }
+
+      const result = await createSiteAction(payload)
 
       if (!result.success) {
         throw new Error(result.error || 'Error al registrar el sitio web.')
@@ -284,7 +285,6 @@ export default function CrearWebPage() {
   if (step === 'preview') {
     return (
       <div className="min-h-screen bg-slate-950 text-white relative pb-20">
-        {/* Barra superior de control */}
         <div className="sticky top-0 z-50 bg-slate-900/95 border-b border-cyan-500/30 backdrop-blur-md px-6 py-4 flex flex-col md:flex-row items-center justify-between gap-4 shadow-xl">
           <div className="flex items-center gap-3">
             <span className="w-3 h-3 rounded-full bg-cyan-400 animate-pulse" />
@@ -294,7 +294,6 @@ export default function CrearWebPage() {
             </div>
           </div>
 
-          {/* Selector de Dispositivo (Escritorio / Móvil) */}
           <div className="flex items-center bg-slate-950 border border-slate-800 p-1 rounded-xl">
             <button
               onClick={() => setPreviewDevice('desktop')}
@@ -330,7 +329,6 @@ export default function CrearWebPage() {
           </div>
         </div>
 
-        {/* Contenedor Adaptativo de Vista Previa */}
         <div className={`mx-auto p-4 md:p-8 transition-all duration-300 ${
           previewDevice === 'mobile' ? 'max-w-md' : 'max-w-4xl'
         }`}>
@@ -341,7 +339,6 @@ export default function CrearWebPage() {
           </div>
         </div>
 
-        {/* Botón flotante de WhatsApp */}
         {formData.whatsapp && (
           <a 
             href={`https://wa.me/${formData.whatsapp}`}
@@ -356,7 +353,7 @@ export default function CrearWebPage() {
     )
   }
 
-  // --- FORMULARIO DE CREACIÓN ---
+  // --- FORMULARIO DE CREACIÓN SIMPLIFICADO (SOLO 3 CAMPOS ESENCIALES) ---
   return (
     <main className="min-h-screen bg-slate-950 text-white p-6 md:p-12 selection:bg-cyan-500 selection:text-slate-950">
       <div className="max-w-3xl mx-auto">
@@ -367,7 +364,7 @@ export default function CrearWebPage() {
           <h1 className="text-3xl md:text-4xl font-extrabold mt-4">
             Crea tu web profesional <span className="text-cyan-400">100% Gratis</span>
           </h1>
-          <p className="text-slate-400 text-sm mt-2">Selecciona la plantilla ideal para tu rubro y previsualízala al instante.</p>
+          <p className="text-slate-400 text-sm mt-2">Selecciona la plantilla, ingresa tu marca y previsualízala al instante.</p>
         </div>
 
         {errorMsg && (
@@ -408,7 +405,7 @@ export default function CrearWebPage() {
             <input 
               type="text" 
               required
-              placeholder="Ej: Estudio Jurídico Martínez / Barbería Don Pepe"
+              placeholder="Ej: Estudio Jurídico Martínez"
               value={formData.businessName}
               onChange={(e) => setFormData({...formData, businessName: e.target.value})}
               className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cyan-500 transition"
@@ -432,41 +429,14 @@ export default function CrearWebPage() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-slate-300 mb-2">WhatsApp de contacto</label>
-              <input 
-                type="text" 
-                required
-                placeholder="+56912345678"
-                value={formData.whatsapp}
-                onChange={(e) => setFormData({...formData, whatsapp: e.target.value})}
-                className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cyan-500 transition text-sm"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-slate-300 mb-2">Categoría</label>
-              <select 
-                value={formData.category}
-                onChange={(e) => setFormData({...formData, category: e.target.value})}
-                className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cyan-500 transition text-sm"
-              >
-                <option value="servicios">Servicios Profesionales</option>
-                <option value="comercio">Comercio / Tienda</option>
-                <option value="gastronomia">Gastronomía</option>
-                <option value="salud">Salud y Belleza</option>
-              </select>
-            </div>
-          </div>
-
           <div>
-            <label className="block text-sm font-medium text-slate-300 mb-2">Breve descripción del negocio</label>
-            <textarea 
-              rows={3}
+            <label className="block text-sm font-medium text-slate-300 mb-2">WhatsApp de contacto</label>
+            <input 
+              type="text" 
               required
-              placeholder="¿Qué ofrece tu marca a los clientes?"
-              value={formData.description}
-              onChange={(e) => setFormData({...formData, description: e.target.value})}
+              placeholder="+56912345678"
+              value={formData.whatsapp}
+              onChange={(e) => setFormData({...formData, whatsapp: e.target.value})}
               className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cyan-500 transition text-sm"
             />
           </div>
