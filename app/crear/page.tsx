@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { createSiteAction } from './actions'
 
-// --- 1. PLANTILLAS PROFESIONALES CON IMÁGENES DE FONDO CINEMATOGRÁFICAS ---
+// --- 1. PLANTILLAS PROFESIONALES CON ESTADÍSTICAS, TESTIMONIOS Y FONDOS ---
 
 function TemplateAbogados({ data }: { data: any }) {
   return (
@@ -28,7 +28,7 @@ function TemplateAbogados({ data }: { data: any }) {
         </div>
       </header>
 
-      {/* Hero con Imagen de Fondo Profesional y Overlay Oscuro */}
+      {/* Hero */}
       <div className="relative px-4 sm:px-6 py-16 md:py-28 text-center space-y-5 md:space-y-6 overflow-hidden">
         <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&q=80&w=1200')] bg-cover bg-center" />
         <div className="absolute inset-0 bg-slate-950/85 backdrop-blur-[2px]" />
@@ -53,8 +53,26 @@ function TemplateAbogados({ data }: { data: any }) {
         </div>
       </div>
 
-      {/* Visión & Misión */}
-      <div className="px-4 sm:px-6 py-10 md:py-14 bg-slate-900/40 border-t border-slate-900">
+      {/* Bloque de Estadísticas */}
+      <div className="bg-slate-900 border-y border-slate-800 py-6 px-4">
+        <div className="grid grid-cols-3 gap-4 max-w-3xl mx-auto text-center">
+          <div>
+            <div className="text-xl md:text-3xl font-bold text-amber-400">+500</div>
+            <div className="text-[10px] md:text-xs text-slate-400 uppercase tracking-wider">Casos de Éxito</div>
+          </div>
+          <div>
+            <div className="text-xl md:text-3xl font-bold text-amber-400">98%</div>
+            <div className="text-[10px] md:text-xs text-slate-400 uppercase tracking-wider">Efectividad</div>
+          </div>
+          <div>
+            <div className="text-xl md:text-3xl font-bold text-amber-400">15 Años</div>
+            <div className="text-[10px] md:text-xs text-slate-400 uppercase tracking-wider">Trayectoria</div>
+          </div>
+        </div>
+      </div>
+
+      {/* Misión y Visión */}
+      <div className="px-4 sm:px-6 py-10 md:py-14 bg-slate-900/40">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
           <div className="bg-slate-950 p-6 rounded-2xl border border-slate-800 space-y-2">
             <h3 className="text-amber-400 font-serif font-bold text-lg">Nuestra Misión</h3>
@@ -92,6 +110,13 @@ function TemplateAbogados({ data }: { data: any }) {
         </div>
       </div>
 
+      {/* Testimonios */}
+      <div className="px-4 sm:px-6 py-12 bg-slate-900/20 border-t border-slate-900 text-center space-y-4">
+        <div className="text-amber-400 text-sm tracking-widest">★★★★★</div>
+        <p className="text-sm md:text-base text-slate-300 italic max-w-xl mx-auto">"Su asesoría fue clave para resolver nuestro conflicto corporativo con total profesionalismo y rapidez."</p>
+        <span className="text-xs text-slate-400 uppercase tracking-widest font-semibold">— Gerente General, Empresa Asociada</span>
+      </div>
+
       <footer className="bg-slate-950 border-t border-slate-900 px-6 py-8 text-center space-y-4">
         {data.instagram && (
           <div className="flex justify-center items-center gap-2 text-xs text-amber-400">
@@ -103,9 +128,9 @@ function TemplateAbogados({ data }: { data: any }) {
         )}
         <p className="text-xs text-slate-400 font-medium">© {new Date().getFullYear()} {data.businessName || 'Estudio Jurídico'}. Todos los derechos reservados.</p>
         <div className="flex justify-center gap-6 text-[11px] text-slate-500">
-          <span>Términos y Condiciones</span>
+          <span contentEditable suppressContentEditableWarning className="hover:text-amber-400 cursor-text transition px-1 rounded border border-transparent hover:border-slate-800">Términos y Condiciones</span>
           <span>•</span>
-          <span>Política de Privacidad</span>
+          <span contentEditable suppressContentEditableWarning className="hover:text-amber-400 cursor-text transition px-1 rounded border border-transparent hover:border-slate-800">Política de Privacidad</span>
         </div>
       </footer>
     </div>
@@ -159,8 +184,26 @@ function TemplateBarberia({ data }: { data: any }) {
         </div>
       </div>
 
+      {/* Estadísticas */}
+      <div className="bg-neutral-900 border-y border-neutral-800 py-6 px-4">
+        <div className="grid grid-cols-3 gap-4 max-w-3xl mx-auto text-center">
+          <div>
+            <div className="text-xl md:text-3xl font-black text-cyan-400">+1,500</div>
+            <div className="text-[10px] md:text-xs text-neutral-400 uppercase tracking-wider">Cortes al Mes</div>
+          </div>
+          <div>
+            <div className="text-xl md:text-3xl font-black text-cyan-400">100%</div>
+            <div className="text-[10px] md:text-xs text-neutral-400 uppercase tracking-wider">Estilo Urbano</div>
+          </div>
+          <div>
+            <div className="text-xl md:text-3xl font-black text-cyan-400">5★</div>
+            <div className="text-[10px] md:text-xs text-neutral-400 uppercase tracking-wider">Valoración</div>
+          </div>
+        </div>
+      </div>
+
       {/* Misión y Visión */}
-      <div className="px-4 sm:px-6 py-10 md:py-14 bg-neutral-900/40 border-t border-neutral-900">
+      <div className="px-4 sm:px-6 py-10 md:py-14 bg-neutral-900/40">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
           <div className="bg-neutral-950 p-6 rounded-2xl border border-neutral-800 space-y-2">
             <h3 className="text-cyan-400 font-bold text-base uppercase tracking-wider">Nuestra Propuesta</h3>
@@ -204,6 +247,13 @@ function TemplateBarberia({ data }: { data: any }) {
         </div>
       </div>
 
+      {/* Testimonios */}
+      <div className="px-4 sm:px-6 py-12 bg-neutral-900/20 border-t border-neutral-900 text-center space-y-4">
+        <div className="text-cyan-400 text-sm tracking-widest">★★★★★</div>
+        <p className="text-sm md:text-base text-neutral-300 italic max-w-xl mx-auto">"El mejor degradado de la ciudad. La atención y el ambiente son simplemente de otro nivel."</p>
+        <span className="text-xs text-neutral-400 uppercase tracking-widest font-semibold">— Cliente Frecuente</span>
+      </div>
+
       <footer className="bg-neutral-950 border-t border-neutral-900 px-6 py-8 text-center space-y-3">
         {data.instagram && (
           <div className="flex justify-center items-center gap-2 text-xs text-cyan-400">
@@ -215,9 +265,9 @@ function TemplateBarberia({ data }: { data: any }) {
         )}
         <p className="text-xs text-neutral-400 font-medium">© {new Date().getFullYear()} {data.businessName || 'Barbería Moderna'}. Todos los derechos reservados.</p>
         <div className="flex justify-center gap-6 text-[11px] text-neutral-500">
-          <span>Términos de Servicio</span>
+          <span contentEditable suppressContentEditableWarning className="hover:text-cyan-400 cursor-text transition px-1 rounded border border-transparent hover:border-neutral-800">Términos de Servicio</span>
           <span>•</span>
-          <span>Política de Privacidad</span>
+          <span contentEditable suppressContentEditableWarning className="hover:text-cyan-400 cursor-text transition px-1 rounded border border-transparent hover:border-neutral-800">Política de Privacidad</span>
         </div>
       </footer>
     </div>
@@ -271,8 +321,26 @@ function TemplatePanaderia({ data }: { data: any }) {
         </div>
       </div>
 
+      {/* Estadísticas */}
+      <div className="bg-slate-900 border-y border-orange-900/20 py-6 px-4">
+        <div className="grid grid-cols-3 gap-4 max-w-3xl mx-auto text-center">
+          <div>
+            <div className="text-xl md:text-3xl font-bold text-orange-400">+20 Años</div>
+            <div className="text-[10px] md:text-xs text-slate-400 uppercase tracking-wider">De Tradición</div>
+          </div>
+          <div>
+            <div className="text-xl md:text-3xl font-bold text-orange-400">100%</div>
+            <div className="text-[10px] md:text-xs text-slate-400 uppercase tracking-wider">Mantequilla Pura</div>
+          </div>
+          <div>
+            <div className="text-xl md:text-3xl font-bold text-orange-400">Diario</div>
+            <div className="text-[10px] md:text-xs text-slate-400 uppercase tracking-wider">Horneado Fresco</div>
+          </div>
+        </div>
+      </div>
+
       {/* Visión y Propósito */}
-      <div className="px-4 sm:px-6 py-10 md:py-14 bg-slate-900/40 border-t border-slate-900">
+      <div className="px-4 sm:px-6 py-10 md:py-14 bg-slate-900/40">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
           <div className="bg-slate-950 p-6 rounded-2xl border border-orange-900/30 space-y-2">
             <h3 className="text-orange-400 font-bold text-base uppercase tracking-wider">Tradición y Calidad</h3>
@@ -310,6 +378,13 @@ function TemplatePanaderia({ data }: { data: any }) {
         </div>
       </div>
 
+      {/* Testimonios */}
+      <div className="px-4 sm:px-6 py-12 bg-slate-900/20 border-t border-orange-900/30 text-center space-y-4">
+        <div className="text-orange-400 text-sm tracking-widest">★★★★★</div>
+        <p className="text-sm md:text-base text-slate-300 italic max-w-xl mx-auto">"El pan de masa madre es exquisito y la atención por WhatsApp para encargar tortas es rapidísima."</p>
+        <span className="text-xs text-slate-400 uppercase tracking-widest font-semibold">— Vecina del Sector</span>
+      </div>
+
       <footer className="bg-slate-950 border-t border-orange-900/30 px-6 py-8 text-center space-y-3">
         {data.instagram && (
           <div className="flex justify-center items-center gap-2 text-xs text-orange-400">
@@ -321,9 +396,9 @@ function TemplatePanaderia({ data }: { data: any }) {
         )}
         <p className="text-xs text-slate-400 font-medium">© {new Date().getFullYear()} {data.businessName || 'Panadería Artesanal'}. Todos los derechos reservados.</p>
         <div className="flex justify-center gap-6 text-[11px] text-slate-500">
-          <span>Términos y Condiciones</span>
+          <span contentEditable suppressContentEditableWarning className="hover:text-orange-400 cursor-text transition px-1 rounded border border-transparent hover:border-slate-800">Términos y Condiciones</span>
           <span>•</span>
-          <span>Política de Privacidad</span>
+          <span contentEditable suppressContentEditableWarning className="hover:text-orange-400 cursor-text transition px-1 rounded border border-transparent hover:border-slate-800">Política de Privacidad</span>
         </div>
       </footer>
     </div>
@@ -377,8 +452,26 @@ function TemplateGimnasio({ data }: { data: any }) {
         </div>
       </div>
 
+      {/* Estadísticas */}
+      <div className="bg-zinc-900 border-y border-zinc-800 py-6 px-4">
+        <div className="grid grid-cols-3 gap-4 max-w-3xl mx-auto text-center">
+          <div>
+            <div className="text-xl md:text-3xl font-black text-lime-400">+1,200</div>
+            <div className="text-[10px] md:text-xs text-zinc-400 uppercase tracking-wider">Atletas Activos</div>
+          </div>
+          <div>
+            <div className="text-xl md:text-3xl font-black text-lime-400">100%</div>
+            <div className="text-[10px] md:text-xs text-zinc-400 uppercase tracking-wider">Equipamiento Pro</div>
+          </div>
+          <div>
+            <div className="text-xl md:text-3xl font-black text-lime-400">+15</div>
+            <div className="text-[10px] md:text-xs text-zinc-400 uppercase tracking-wider">Clases Semanales</div>
+          </div>
+        </div>
+      </div>
+
       {/* Misión y Visión */}
-      <div className="px-4 sm:px-6 py-10 md:py-14 bg-zinc-900/40 border-t border-zinc-900">
+      <div className="px-4 sm:px-6 py-10 md:py-14 bg-zinc-900/40">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
           <div className="bg-zinc-950 p-6 rounded-2xl border border-zinc-800 space-y-2">
             <h3 className="text-lime-400 font-bold text-base uppercase tracking-wider">Nuestra Visión Fitness</h3>
@@ -416,6 +509,13 @@ function TemplateGimnasio({ data }: { data: any }) {
         </div>
       </div>
 
+      {/* Testimonios */}
+      <div className="px-4 sm:px-6 py-12 bg-zinc-900/20 border-t border-zinc-900 text-center space-y-4">
+        <div className="text-lime-400 text-sm tracking-widest">★★★★★</div>
+        <p className="text-sm md:text-base text-zinc-300 italic max-w-xl mx-auto">"Las instalaciones son impecables y los profesores siempre están atentos a corregir tu técnica. 100% recomendado."</p>
+        <span className="text-xs text-zinc-400 uppercase tracking-widest font-semibold">— Socio Activo</span>
+      </div>
+
       <footer className="bg-zinc-950 border-t border-zinc-900 px-6 py-8 text-center space-y-3">
         {data.instagram && (
           <div className="flex justify-center items-center gap-2 text-xs text-lime-400">
@@ -427,9 +527,9 @@ function TemplateGimnasio({ data }: { data: any }) {
         )}
         <p className="text-xs text-zinc-400 font-medium">© {new Date().getFullYear()} {data.businessName || 'Elite Fitness Center'}. Todos los derechos reservados.</p>
         <div className="flex justify-center gap-6 text-[11px] text-zinc-500">
-          <span>Términos y Condiciones</span>
+          <span contentEditable suppressContentEditableWarning className="hover:text-lime-400 cursor-text transition px-1 rounded border border-transparent hover:border-zinc-800">Términos y Condiciones</span>
           <span>•</span>
-          <span>Política de Privacidad</span>
+          <span contentEditable suppressContentEditableWarning className="hover:text-lime-400 cursor-text transition px-1 rounded border border-transparent hover:border-zinc-800">Política de Privacidad</span>
         </div>
       </footer>
     </div>
@@ -483,8 +583,26 @@ function TemplateDental({ data }: { data: any }) {
         </div>
       </div>
 
+      {/* Estadísticas */}
+      <div className="bg-slate-900 border-y border-sky-900/20 py-6 px-4">
+        <div className="grid grid-cols-3 gap-4 max-w-3xl mx-auto text-center">
+          <div>
+            <div className="text-xl md:text-3xl font-bold text-sky-400">+3,000</div>
+            <div className="text-[10px] md:text-xs text-slate-400 uppercase tracking-wider">Sonrisas Felices</div>
+          </div>
+          <div>
+            <div className="text-xl md:text-3xl font-bold text-sky-400">100%</div>
+            <div className="text-[10px] md:text-xs text-slate-400 uppercase tracking-wider">Sin Dolor</div>
+          </div>
+          <div>
+            <div className="text-xl md:text-3xl font-bold text-sky-400">Avanzada</div>
+            <div className="text-[10px] md:text-xs text-slate-400 uppercase tracking-wider">Tecnología 3D</div>
+          </div>
+        </div>
+      </div>
+
       {/* Misión y Visión */}
-      <div className="px-4 sm:px-6 py-10 md:py-14 bg-slate-900/40 border-t border-slate-900">
+      <div className="px-4 sm:px-6 py-10 md:py-14 bg-slate-900/40">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
           <div className="bg-slate-950 p-6 rounded-2xl border border-sky-900/30 space-y-2">
             <h3 className="text-sky-400 font-bold text-base uppercase tracking-wider">Nuestra Misión Odontológica</h3>
@@ -522,6 +640,13 @@ function TemplateDental({ data }: { data: any }) {
         </div>
       </div>
 
+      {/* Testimonios */}
+      <div className="px-4 sm:px-6 py-12 bg-slate-900/20 border-t border-sky-900/30 text-center space-y-4">
+        <div className="text-sky-400 text-sm tracking-widest">★★★★★</div>
+        <p className="text-sm md:text-base text-slate-300 italic max-w-xl mx-auto">"Tenía pánico al dentista, pero el trato y la tecnología sin dolor de la clínica superaron todas mis expectativas."</p>
+        <span className="text-xs text-slate-400 uppercase tracking-widest font-semibold">— Paciente Satisfecho</span>
+      </div>
+
       <footer className="bg-slate-950 border-t border-sky-900/30 px-6 py-8 text-center space-y-3">
         {data.instagram && (
           <div className="flex justify-center items-center gap-2 text-xs text-sky-400">
@@ -533,9 +658,9 @@ function TemplateDental({ data }: { data: any }) {
         )}
         <p className="text-xs text-slate-400 font-medium">© {new Date().getFullYear()} {data.businessName || 'Clínica Dental Sonrisa'}. Todos los derechos reservados.</p>
         <div className="flex justify-center gap-6 text-[11px] text-slate-500">
-          <span>Términos y Condiciones</span>
+          <span contentEditable suppressContentEditableWarning className="hover:text-sky-400 cursor-text transition px-1 rounded border border-transparent hover:border-slate-800">Términos y Condiciones</span>
           <span>•</span>
-          <span>Política de Privacidad</span>
+          <span contentEditable suppressContentEditableWarning className="hover:text-sky-400 cursor-text transition px-1 rounded border border-transparent hover:border-slate-800">Política de Privacidad</span>
         </div>
       </footer>
     </div>
@@ -589,8 +714,26 @@ function TemplateComida({ data }: { data: any }) {
         </div>
       </div>
 
+      {/* Estadísticas */}
+      <div className="bg-zinc-900 border-y border-red-900/20 py-6 px-4">
+        <div className="grid grid-cols-3 gap-4 max-w-3xl mx-auto text-center">
+          <div>
+            <div className="text-xl md:text-3xl font-black text-red-400">+10,000</div>
+            <div className="text-[10px] md:text-xs text-zinc-400 uppercase tracking-wider">Burgers Vendidas</div>
+          </div>
+          <div>
+            <div className="text-xl md:text-3xl font-black text-red-400">100%</div>
+            <div className="text-[10px] md:text-xs text-zinc-400 uppercase tracking-wider">Carne Vacuna</div>
+          </div>
+          <div>
+            <div className="text-xl md:text-3xl font-black text-red-400">30 Min</div>
+            <div className="text-[10px] md:text-xs text-zinc-400 uppercase tracking-wider">Delivery Promedio</div>
+          </div>
+        </div>
+      </div>
+
       {/* Visión y Propósito */}
-      <div className="px-4 sm:px-6 py-10 md:py-14 bg-zinc-900/40 border-t border-zinc-900">
+      <div className="px-4 sm:px-6 py-10 md:py-14 bg-zinc-900/40">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
           <div className="bg-zinc-950 p-6 rounded-2xl border border-red-900/30 space-y-2">
             <h3 className="text-red-400 font-bold text-base uppercase tracking-wider">Pasión por la Parrilla</h3>
@@ -628,6 +771,13 @@ function TemplateComida({ data }: { data: any }) {
         </div>
       </div>
 
+      {/* Testimonios */}
+      <div className="px-4 sm:px-6 py-12 bg-zinc-900/20 border-t border-red-900/30 text-center space-y-4">
+        <div className="text-red-400 text-sm tracking-widest">★★★★★</div>
+        <p className="text-sm md:text-base text-zinc-300 italic max-w-xl mx-auto">"Las hamburguesas más jugosas que he probado. El pan brioche y la salsa de la casa son una locura."</p>
+        <span className="text-xs text-zinc-400 uppercase tracking-widest font-semibold">— Cliente VIP</span>
+      </div>
+
       <footer className="bg-zinc-950 border-t border-red-900/30 px-6 py-8 text-center space-y-3">
         {data.instagram && (
           <div className="flex justify-center items-center gap-2 text-xs text-red-400">
@@ -639,9 +789,9 @@ function TemplateComida({ data }: { data: any }) {
         )}
         <p className="text-xs text-zinc-400 font-medium">© {new Date().getFullYear()} {data.businessName || 'Burger & Grill House'}. Todos los derechos reservados.</p>
         <div className="flex justify-center gap-6 text-[11px] text-zinc-500">
-          <span>Términos y Condiciones</span>
+          <span contentEditable suppressContentEditableWarning className="hover:text-red-400 cursor-text transition px-1 rounded border border-transparent hover:border-slate-800">Términos y Condiciones</span>
           <span>•</span>
-          <span>Política de Privacidad</span>
+          <span contentEditable suppressContentEditableWarning className="hover:text-red-400 cursor-text transition px-1 rounded border border-transparent hover:border-slate-800">Política de Privacidad</span>
         </div>
       </footer>
     </div>
