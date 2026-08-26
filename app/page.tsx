@@ -44,11 +44,11 @@ export default function Home() {
           </div>
 
           <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight leading-[1.08]">
-            Crea tu sitio web profesional y <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-teal-300 to-blue-500">conecta con WhatsApp</span>
+            Crea tu sitio web profesional, <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-teal-300 to-blue-500">conecta WhatsApp y Redes Sociales</span>
           </h1>
 
           <p className="text-slate-400 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto font-normal">
-            Lanza tu presencia digital en menos de 2 minutos. Sin código, sin configuraciones complejas y optimizado para potenciar tus ventas locales y regionales.
+            Lanza tu presencia digital en menos de 2 minutos. Integra tu WhatsApp, enlázate con Instagram y potencia tus ventas locales con un diseño de impacto.
           </p>
 
           {/* Selector de Países Visual (Demostración de Cobertura Latam) */}
@@ -112,22 +112,46 @@ export default function Home() {
             <div className="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 text-xl font-bold mb-6 group-hover:scale-110 transition-transform">
               💬
             </div>
-            <h3 className="font-bold text-xl text-white mb-3">Conversión a WhatsApp</h3>
+            <h3 className="font-bold text-xl text-white mb-3">WhatsApp & Redes Sociales</h3>
             <p className="text-sm text-slate-400 leading-relaxed">
-              Botones de contacto estratégico diseñados para convertir visitantes casuales en compradores directos a través de mensajería instantánea.
+              Integra tu enlace directo de WhatsApp y tus perfiles de Instagram para consolidar tu comunidad y convertir visitantes en compradores.
             </p>
           </div>
 
           <div className="group bg-slate-900/40 border border-slate-800/80 hover:border-cyan-500/50 p-8 rounded-2xl backdrop-blur-md transition duration-300 shadow-lg">
             <div className="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 text-xl font-bold mb-6 group-hover:scale-110 transition-transform">
-              🌎
+              🌐
             </div>
-            <h3 className="font-bold text-xl text-white mb-3">Hecho para Latinoamérica</h3>
+            <h3 className="font-bold text-xl text-white mb-3">Dominio Personalizado</h3>
             <p className="text-sm text-slate-400 leading-relaxed">
-              Pensado estructuralmente para las necesidades comerciales de emprendedores en Chile, México, Colombia y toda la región.
+              Consigue tu propio dominio profesional (.com, .cl, etc.) para que tu marca destaque con total seriedad y autoridad en internet.
             </p>
           </div>
 
+        </div>
+
+        {/* Sección de Dominio Personalizado (Nuevo Banner de Conversión) */}
+        <div className="pt-24">
+          <div className="bg-gradient-to-r from-cyan-950/40 via-slate-900 to-blue-950/40 border border-cyan-500/30 p-8 md:p-12 rounded-3xl shadow-2xl relative overflow-hidden text-center max-w-4xl mx-auto space-y-6">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-400/10 blur-3xl pointer-events-none" />
+            <span className="bg-cyan-500/20 text-cyan-400 text-xs font-bold uppercase tracking-widest px-3.5 py-1.5 rounded-full border border-cyan-500/30">
+              Personalización Total
+            </span>
+            <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight">
+              ¿Quieres un <span className="text-cyan-400">dominio propio</span> para tu negocio?
+            </h2>
+            <p className="text-slate-300 text-sm md:text-base max-w-xl mx-auto leading-relaxed">
+              Potencia la imagen de tu marca adquiriendo un dominio exclusivo (tumarca.com o tumarca.cl) configurado al instante con tu nueva web.
+            </p>
+            <div className="pt-2">
+              <a 
+                href="/crear" 
+                className="inline-flex items-center gap-2 bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-extrabold px-8 py-4 rounded-xl text-sm transition shadow-lg shadow-cyan-400/20"
+              >
+                <span>🔍 Consultar Disponibilidad de Dominio</span>
+              </a>
+            </div>
+          </div>
         </div>
 
         {/* Casos de Éxito y Testimonios */}
@@ -148,7 +172,7 @@ export default function Home() {
             
             <div className="bg-slate-900/60 border border-slate-800 p-6 rounded-2xl flex flex-col justify-between">
               <p className="text-sm text-slate-300 italic mb-6">
-                &ldquo;Tenía mi barbería y dependía solo del boca a boca. Con ImpulsaWeb armé mi página en 2 minutos y ahora los clientes reservan directo a mi WhatsApp.&rdquo;
+                &ldquo;Tenía mi barbería y dependía solo del boca a boca. Con ImpulsaWeb armé mi página con mi Instagram y WhatsApp en 2 minutos. ¡Excelente!&rdquo;
               </p>
               <div>
                 <div className="font-bold text-sm text-white">Carlos Valenzuela</div>
@@ -197,13 +221,13 @@ export default function Home() {
             </div>
 
             <div className="bg-slate-900/40 border border-slate-800 p-6 rounded-2xl">
-              <h3 className="font-bold text-base text-white mb-2">¿Cómo funciona la conexión con WhatsApp?</h3>
-              <p className="text-sm text-slate-400">Cada botón de llamada a la acción en tu sitio web se vincula automáticamente con tu número telefónico registrado, permitiendo que tus clientes te escriban al instante con un solo clic.</p>
+              <h3 className="font-bold text-base text-white mb-2">¿Cómo funciona la conexión con WhatsApp e Instagram?</h3>
+              <p className="text-sm text-slate-400">Cada botón de llamada a la acción en tu sitio web se vincula automáticamente con tu número de WhatsApp y tus redes sociales, permitiendo que tus clientes conecten al instante.</p>
             </div>
 
             <div className="bg-slate-900/40 border border-slate-800 p-6 rounded-2xl">
-              <h3 className="font-bold text-base text-white mb-2">¿Necesito conocimientos técnicos avanzados?</h3>
-              <p className="text-sm text-slate-400">Para nada. Nuestra plataforma está diseñada para emprendedores sin experiencia técnica. Solo completas el formulario y tu sitio web queda listo de inmediato.</p>
+              <h3 className="font-bold text-base text-white mb-2">¿Puedo usar mi propio dominio personalizado?</h3>
+              <p className="text-sm text-slate-400">¡Por supuesto! Puedes integrar tu propio dominio o adquirir uno directamente con nosotros para darle máxima autoridad y profesionalismo a tu marca.</p>
             </div>
           </div>
         </div>
