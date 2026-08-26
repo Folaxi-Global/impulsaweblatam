@@ -48,18 +48,8 @@ export default function Home() {
           </h1>
 
           <p className="text-slate-400 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto font-normal">
-            Lanza tu presencia digital en menos de 2 minutos. Integra tu WhatsApp, enlázate con Instagram y potencia tus ventas locales con un diseño de impacto.
+            Lanza tu presencia digital en menos de 2 minutos. Integra tu WhatsApp, añade tus enlaces de Instagram y potencia tus ventas con un diseño de impacto.
           </p>
-
-          {/* Selector de Países Visual (Demostración de Cobertura Latam) */}
-          <div className="flex flex-wrap items-center justify-center gap-2 pt-2">
-            <span className="text-xs text-slate-400 uppercase tracking-wider font-semibold mr-2">Operando en:</span>
-            <span className="bg-slate-900 border border-slate-800 text-xs text-slate-300 px-3 py-1.5 rounded-lg flex items-center gap-1.5">🇨🇱 Chile</span>
-            <span className="bg-slate-900 border border-slate-800 text-xs text-slate-300 px-3 py-1.5 rounded-lg flex items-center gap-1.5">🇲🇽 México</span>
-            <span className="bg-slate-900 border border-slate-800 text-xs text-slate-300 px-3 py-1.5 rounded-lg flex items-center gap-1.5">🇨🇴 Colombia</span>
-            <span className="bg-slate-900 border border-slate-800 text-xs text-slate-300 px-3 py-1.5 rounded-lg flex items-center gap-1.5">🇦🇷 Argentina</span>
-            <span className="bg-slate-900 border border-slate-800 text-xs text-slate-300 px-3 py-1.5 rounded-lg flex items-center gap-1.5">🇵🇪 Perú</span>
-          </div>
 
           {/* Botones de acción principales */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-6">
@@ -74,7 +64,7 @@ export default function Home() {
               href="/checkout" 
               className="w-full sm:w-auto bg-slate-900/90 hover:bg-slate-900 text-slate-200 border border-slate-800 hover:border-slate-700 px-8 py-4 rounded-xl font-semibold transition text-center text-base"
             >
-              Conocer Costos y Mantenimiento
+              Conocer Costos y Planes
             </a>
           </div>
 
@@ -124,31 +114,31 @@ export default function Home() {
             </div>
             <h3 className="font-bold text-xl text-white mb-3">Dominio Personalizado</h3>
             <p className="text-sm text-slate-400 leading-relaxed">
-              Consigue tu propio dominio profesional (.com, .cl, etc.) para que tu marca destaque con total seriedad y autoridad en internet.
+              Incluye o integra tu propio dominio profesional (.com, .cl, etc.) dentro de nuestros planes para que tu marca destaque con total seriedad.
             </p>
           </div>
 
         </div>
 
-        {/* Sección de Dominio Personalizado (Nuevo Banner de Conversión) */}
+        {/* Sección de Dominio Personalizado en Planes */}
         <div className="pt-24">
           <div className="bg-gradient-to-r from-cyan-950/40 via-slate-900 to-blue-950/40 border border-cyan-500/30 p-8 md:p-12 rounded-3xl shadow-2xl relative overflow-hidden text-center max-w-4xl mx-auto space-y-6">
             <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-400/10 blur-3xl pointer-events-none" />
             <span className="bg-cyan-500/20 text-cyan-400 text-xs font-bold uppercase tracking-widest px-3.5 py-1.5 rounded-full border border-cyan-500/30">
-              Personalización Total
+              Todo Incluido en Planes Pro
             </span>
             <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight">
-              ¿Quieres un <span className="text-cyan-400">dominio propio</span> para tu negocio?
+              Obtén tu <span className="text-cyan-400">dominio propio</span> al activar tu plan
             </h2>
             <p className="text-slate-300 text-sm md:text-base max-w-xl mx-auto leading-relaxed">
-              Potencia la imagen de tu marca adquiriendo un dominio exclusivo (tumarca.com o tumarca.cl) configurado al instante con tu nueva web.
+              Potencia la imagen de tu negocio con una dirección exclusiva (tumarca.com o tumarca.cl) gestionada directamente desde tu panel de suscripción.
             </p>
             <div className="pt-2">
               <a 
-                href="/crear" 
+                href="/checkout" 
                 className="inline-flex items-center gap-2 bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-extrabold px-8 py-4 rounded-xl text-sm transition shadow-lg shadow-cyan-400/20"
               >
-                <span>🔍 Consultar Disponibilidad de Dominio</span>
+                <span>🚀 Ver Planes y Opciones de Dominio</span>
               </a>
             </div>
           </div>
@@ -226,8 +216,8 @@ export default function Home() {
             </div>
 
             <div className="bg-slate-900/40 border border-slate-800 p-6 rounded-2xl">
-              <h3 className="font-bold text-base text-white mb-2">¿Puedo usar mi propio dominio personalizado?</h3>
-              <p className="text-sm text-slate-400">¡Por supuesto! Puedes integrar tu propio dominio o adquirir uno directamente con nosotros para darle máxima autoridad y profesionalismo a tu marca.</p>
+              <h3 className="font-bold text-base text-white mb-2">¿Cómo se gestiona el dominio personalizado en los planes?</h3>
+              <p className="text-sm text-slate-400">Los planes superiores de la plataforma incluyen la gestión y configuración completa de tu dominio propio (.com, .cl, etc.) para que no tengas que preocuparte por configuraciones técnicas.</p>
             </div>
           </div>
         </div>
