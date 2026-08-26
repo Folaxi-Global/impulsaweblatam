@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { createSiteAction } from './actions'
 
-// --- 1. PLANTILLAS PROFESIONALES CON REDES SOCIALES Y SECCIÓN CORPORATIVA ---
+// --- 1. PLANTILLAS PROFESIONALES CON IMÁGENES DE FONDO CINEMATOGRÁFICAS ---
 
 function TemplateAbogados({ data }: { data: any }) {
   return (
@@ -28,24 +28,28 @@ function TemplateAbogados({ data }: { data: any }) {
         </div>
       </header>
 
-      {/* Hero */}
-      <div className="relative px-4 sm:px-6 py-12 md:py-20 text-center space-y-5 md:space-y-6 bg-gradient-to-b from-slate-900/90 via-slate-950 to-slate-950">
-        <div className="absolute top-10 left-1/2 -translate-x-1/2 w-72 md:w-96 h-32 md:h-40 bg-amber-500/20 blur-3xl pointer-events-none animate-pulse" />
-        <span className="inline-block text-amber-400 text-[11px] md:text-xs font-semibold tracking-widest uppercase border border-amber-400/40 px-3.5 py-1.5 rounded-full bg-amber-400/10 shadow-[0_0_15px_rgba(245,158,11,0.2)]">
-          Defensa Legal Estratégica & Confidencial
-        </span>
-        <h1 className="text-2xl sm:text-4xl md:text-6xl font-serif font-extrabold text-white tracking-tight max-w-3xl mx-auto leading-tight px-2">
-          {data.businessName || 'Protegemos sus derechos y su patrimonio'}
-        </h1>
-        <p className="text-slate-300 text-xs sm:text-sm md:text-base max-w-2xl mx-auto leading-relaxed font-light px-2">
-          Años de trayectoria defendiendo con firmeza los intereses de nuestros clientes ante tribunales con máxima rigurosidad ética.
-        </p>
-        <div className="pt-2 md:pt-4 px-4">
-          {data.whatsapp && (
-            <a href={`https://wa.me/${data.whatsapp}`} target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-400 hover:to-yellow-400 text-slate-950 font-extrabold px-6 md:px-8 py-3.5 md:py-4 rounded-xl md:rounded-2xl text-xs md:text-sm transition shadow-[0_0_25px_rgba(245,158,11,0.5)] animate-pulse">
-              <span>📅 Agendar Asesoría Jurídica</span>
-            </a>
-          )}
+      {/* Hero con Imagen de Fondo Profesional y Overlay Oscuro */}
+      <div className="relative px-4 sm:px-6 py-16 md:py-28 text-center space-y-5 md:space-y-6 overflow-hidden">
+        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&q=80&w=1200')] bg-cover bg-center" />
+        <div className="absolute inset-0 bg-slate-950/85 backdrop-blur-[2px]" />
+        
+        <div className="relative z-10 space-y-5 max-w-3xl mx-auto">
+          <span className="inline-block text-amber-400 text-[11px] md:text-xs font-semibold tracking-widest uppercase border border-amber-400/40 px-3.5 py-1.5 rounded-full bg-amber-400/10 shadow-[0_0_15px_rgba(245,158,11,0.2)]">
+            Defensa Legal Estratégica & Confidencial
+          </span>
+          <h1 className="text-2xl sm:text-4xl md:text-6xl font-serif font-extrabold text-white tracking-tight leading-tight px-2">
+            {data.businessName || 'Protegemos sus derechos y su patrimonio'}
+          </h1>
+          <p className="text-slate-300 text-xs sm:text-sm md:text-base max-w-2xl mx-auto leading-relaxed font-light px-2">
+            Años de trayectoria defendiendo con firmeza los intereses de nuestros clientes ante tribunales con máxima rigurosidad ética.
+          </p>
+          <div className="pt-2 md:pt-4 px-4">
+            {data.whatsapp && (
+              <a href={`https://wa.me/${data.whatsapp}`} target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-400 hover:to-yellow-400 text-slate-950 font-extrabold px-6 md:px-8 py-3.5 md:py-4 rounded-xl md:rounded-2xl text-xs md:text-sm transition shadow-[0_0_25px_rgba(245,158,11,0.5)] animate-pulse">
+                <span>📅 Agendar Asesoría Jurídica</span>
+              </a>
+            )}
+          </div>
         </div>
       </div>
 
@@ -88,7 +92,6 @@ function TemplateAbogados({ data }: { data: any }) {
         </div>
       </div>
 
-      {/* Footer corporativo */}
       <footer className="bg-slate-950 border-t border-slate-900 px-6 py-8 text-center space-y-4">
         {data.instagram && (
           <div className="flex justify-center items-center gap-2 text-xs text-amber-400">
@@ -132,23 +135,27 @@ function TemplateBarberia({ data }: { data: any }) {
       </header>
 
       {/* Hero */}
-      <div className="relative px-4 sm:px-6 py-12 md:py-20 text-center space-y-5 md:space-y-6 bg-gradient-to-b from-neutral-900 via-neutral-950 to-neutral-950">
-        <div className="absolute top-0 right-0 w-72 md:w-96 h-32 md:h-40 bg-cyan-500/20 blur-3xl pointer-events-none animate-pulse" />
-        <span className="inline-block text-cyan-400 text-[11px] md:text-xs font-black tracking-widest uppercase border border-cyan-400/40 px-3.5 py-1.5 rounded-full bg-cyan-400/10 shadow-[0_0_15px_rgba(6,182,212,0.2)]">
-          Barbershop & Grooming Studio Exclusivo
-        </span>
-        <h1 className="text-3xl sm:text-5xl md:text-7xl font-black text-white uppercase tracking-tight max-w-3xl mx-auto leading-none px-2">
-          {data.businessName || 'Estilo, Actitud y Precisión'}
-        </h1>
-        <p className="text-neutral-400 text-xs sm:text-sm md:text-base max-w-2xl mx-auto leading-relaxed px-2">
-          Cortes clásicos, degradados impecables, ritual de barba con toalla caliente y la mejor experiencia para potenciar tu imagen personal.
-        </p>
-        <div className="pt-2 md:pt-4 px-4">
-          {data.whatsapp && (
-            <a href={`https://wa.me/${data.whatsapp}`} target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-gradient-to-r from-cyan-400 to-teal-400 hover:from-cyan-300 hover:to-teal-300 text-slate-950 font-extrabold px-6 md:px-8 py-3.5 md:py-4 rounded-xl md:rounded-2xl text-xs md:text-sm transition shadow-[0_0_30px_rgba(6,182,212,0.5)] animate-pulse">
-              <span>🚀 Reservar Turno por WhatsApp</span>
-            </a>
-          )}
+      <div className="relative px-4 sm:px-6 py-16 md:py-28 text-center space-y-5 md:space-y-6 overflow-hidden">
+        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&q=80&w=1200')] bg-cover bg-center" />
+        <div className="absolute inset-0 bg-neutral-950/85 backdrop-blur-[2px]" />
+
+        <div className="relative z-10 space-y-5 max-w-3xl mx-auto">
+          <span className="inline-block text-cyan-400 text-[11px] md:text-xs font-black tracking-widest uppercase border border-cyan-400/40 px-3.5 py-1.5 rounded-full bg-cyan-400/10 shadow-[0_0_15px_rgba(6,182,212,0.2)]">
+            Barbershop & Grooming Studio Exclusivo
+          </span>
+          <h1 className="text-3xl sm:text-5xl md:text-7xl font-black text-white uppercase tracking-tight leading-none px-2">
+            {data.businessName || 'Estilo, Actitud y Precisión'}
+          </h1>
+          <p className="text-neutral-400 text-xs sm:text-sm md:text-base max-w-2xl mx-auto leading-relaxed px-2">
+            Cortes clásicos, degradados impecables, ritual de barba con toalla caliente y la mejor experiencia para potenciar tu imagen personal.
+          </p>
+          <div className="pt-2 md:pt-4 px-4">
+            {data.whatsapp && (
+              <a href={`https://wa.me/${data.whatsapp}`} target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-gradient-to-r from-cyan-400 to-teal-400 hover:from-cyan-300 hover:to-teal-300 text-slate-950 font-extrabold px-6 md:px-8 py-3.5 md:py-4 rounded-xl md:rounded-2xl text-xs md:text-sm transition shadow-[0_0_30px_rgba(6,182,212,0.5)] animate-pulse">
+                <span>🚀 Reservar Turno por WhatsApp</span>
+              </a>
+            )}
+          </div>
         </div>
       </div>
 
@@ -197,7 +204,6 @@ function TemplateBarberia({ data }: { data: any }) {
         </div>
       </div>
 
-      {/* Footer */}
       <footer className="bg-neutral-950 border-t border-neutral-900 px-6 py-8 text-center space-y-3">
         {data.instagram && (
           <div className="flex justify-center items-center gap-2 text-xs text-cyan-400">
@@ -241,23 +247,27 @@ function TemplatePanaderia({ data }: { data: any }) {
       </header>
 
       {/* Hero */}
-      <div className="relative px-4 sm:px-6 py-12 md:py-20 text-center space-y-5 md:space-y-6 bg-gradient-to-b from-orange-950/30 via-slate-950 to-slate-950">
-        <div className="absolute top-10 left-1/2 -translate-x-1/2 w-72 md:w-96 h-32 md:h-40 bg-orange-500/20 blur-3xl pointer-events-none animate-pulse" />
-        <span className="inline-block text-orange-400 text-[11px] md:text-xs font-semibold tracking-widest uppercase border border-orange-400/40 px-3.5 py-1.5 rounded-full bg-orange-400/10 shadow-[0_0_15px_rgba(249,115,22,0.2)]">
-          Horneado Diario & Tradición Familiar
-        </span>
-        <h1 className="text-2xl sm:text-4xl md:text-6xl font-bold text-white tracking-tight max-w-3xl mx-auto leading-tight px-2">
-          {data.businessName || 'El verdadero sabor del pan recién salido del horno'}
-        </h1>
-        <p className="text-orange-200/80 text-xs sm:text-sm md:text-base max-w-2xl mx-auto leading-relaxed px-2">
-          Elaboramos masas madre de fermentación lenta, bollería de mantequilla pura y pastelería fina para endulzar tus mejores momentos.
-        </p>
-        <div className="pt-2 md:pt-4 px-4">
-          {data.whatsapp && (
-            <a href={`https://wa.me/${data.whatsapp}`} target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-400 hover:to-amber-400 text-slate-950 font-extrabold px-6 md:px-8 py-3.5 md:py-4 rounded-xl md:rounded-2xl text-xs md:text-sm transition shadow-[0_0_30px_rgba(249,115,22,0.5)] animate-pulse">
-              <span>🛒 Pedir por WhatsApp</span>
-            </a>
-          )}
+      <div className="relative px-4 sm:px-6 py-16 md:py-28 text-center space-y-5 md:space-y-6 overflow-hidden">
+        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&q=80&w=1200')] bg-cover bg-center" />
+        <div className="absolute inset-0 bg-slate-950/85 backdrop-blur-[2px]" />
+
+        <div className="relative z-10 space-y-5 max-w-3xl mx-auto">
+          <span className="inline-block text-orange-400 text-[11px] md:text-xs font-semibold tracking-widest uppercase border border-orange-400/40 px-3.5 py-1.5 rounded-full bg-orange-400/10 shadow-[0_0_15px_rgba(249,115,22,0.2)]">
+            Horneado Diario & Tradición Familiar
+          </span>
+          <h1 className="text-2xl sm:text-4xl md:text-6xl font-bold text-white tracking-tight leading-tight px-2">
+            {data.businessName || 'El verdadero sabor del pan recién salido del horno'}
+          </h1>
+          <p className="text-orange-200/80 text-xs sm:text-sm md:text-base max-w-2xl mx-auto leading-relaxed px-2">
+            Elaboramos masas madre de fermentación lenta, bollería de mantequilla pura y pastelería fina para endulzar tus mejores momentos.
+          </p>
+          <div className="pt-2 md:pt-4 px-4">
+            {data.whatsapp && (
+              <a href={`https://wa.me/${data.whatsapp}`} target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-400 hover:to-amber-400 text-slate-950 font-extrabold px-6 md:px-8 py-3.5 md:py-4 rounded-xl md:rounded-2xl text-xs md:text-sm transition shadow-[0_0_30px_rgba(249,115,22,0.5)] animate-pulse">
+                <span>🛒 Pedir por WhatsApp</span>
+              </a>
+            )}
+          </div>
         </div>
       </div>
 
@@ -300,7 +310,6 @@ function TemplatePanaderia({ data }: { data: any }) {
         </div>
       </div>
 
-      {/* Footer */}
       <footer className="bg-slate-950 border-t border-orange-900/30 px-6 py-8 text-center space-y-3">
         {data.instagram && (
           <div className="flex justify-center items-center gap-2 text-xs text-orange-400">
@@ -344,23 +353,27 @@ function TemplateGimnasio({ data }: { data: any }) {
       </header>
 
       {/* Hero */}
-      <div className="relative px-4 sm:px-6 py-12 md:py-20 text-center space-y-5 md:space-y-6 bg-gradient-to-b from-zinc-900 via-zinc-950 to-zinc-950">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-72 md:w-96 h-32 md:h-40 bg-lime-500/20 blur-3xl pointer-events-none animate-pulse" />
-        <span className="inline-block text-lime-400 text-[11px] md:text-xs font-black tracking-widest uppercase border border-lime-400/40 px-3.5 py-1.5 rounded-full bg-lime-400/10 shadow-[0_0_15px_rgba(163,230,53,0.2)]">
-          Transforma tu Cuerpo & Mente
-        </span>
-        <h1 className="text-3xl sm:text-5xl md:text-7xl font-black text-white uppercase tracking-tight max-w-3xl mx-auto leading-none px-2">
-          {data.businessName || 'Alcanza tu Máximo Rendimiento'}
-        </h1>
-        <p className="text-zinc-400 text-xs sm:text-sm md:text-base max-w-2xl mx-auto leading-relaxed px-2">
-          Equipamiento de alta gama, entrenadores expertos, clases grupales dinámicas y un ambiente diseñado para llevarte al siguiente nivel.
-        </p>
-        <div className="pt-2 md:pt-4 px-4">
-          {data.whatsapp && (
-            <a href={`https://wa.me/${data.whatsapp}`} target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-gradient-to-r from-lime-400 to-emerald-400 hover:from-lime-300 hover:to-emerald-300 text-zinc-950 font-black px-6 md:px-8 py-3.5 md:py-4 rounded-xl md:rounded-2xl text-xs md:text-sm transition shadow-[0_0_30px_rgba(163,230,53,0.5)] animate-pulse">
-              <span>🔥 Solicitar Pase Diario / Matrícula</span>
-            </a>
-          )}
+      <div className="relative px-4 sm:px-6 py-16 md:py-28 text-center space-y-5 md:space-y-6 overflow-hidden">
+        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=1200')] bg-cover bg-center" />
+        <div className="absolute inset-0 bg-zinc-950/85 backdrop-blur-[2px]" />
+
+        <div className="relative z-10 space-y-5 max-w-3xl mx-auto">
+          <span className="inline-block text-lime-400 text-[11px] md:text-xs font-black tracking-widest uppercase border border-lime-400/40 px-3.5 py-1.5 rounded-full bg-lime-400/10 shadow-[0_0_15px_rgba(163,230,53,0.2)]">
+            Transforma tu Cuerpo & Mente
+          </span>
+          <h1 className="text-3xl sm:text-5xl md:text-7xl font-black text-white uppercase tracking-tight leading-none px-2">
+            {data.businessName || 'Alcanza tu Máximo Rendimiento'}
+          </h1>
+          <p className="text-zinc-400 text-xs sm:text-sm md:text-base max-w-2xl mx-auto leading-relaxed px-2">
+            Equipamiento de alta gama, entrenadores expertos, clases grupales dinámicas y un ambiente diseñado para llevarte al siguiente nivel.
+          </p>
+          <div className="pt-2 md:pt-4 px-4">
+            {data.whatsapp && (
+              <a href={`https://wa.me/${data.whatsapp}`} target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-gradient-to-r from-lime-400 to-emerald-400 hover:from-lime-300 hover:to-emerald-300 text-zinc-950 font-black px-6 md:px-8 py-3.5 md:py-4 rounded-xl md:rounded-2xl text-xs md:text-sm transition shadow-[0_0_30px_rgba(163,230,53,0.5)] animate-pulse">
+                <span>🔥 Solicitar Pase Diario / Matrícula</span>
+              </a>
+            )}
+          </div>
         </div>
       </div>
 
@@ -403,7 +416,6 @@ function TemplateGimnasio({ data }: { data: any }) {
         </div>
       </div>
 
-      {/* Footer */}
       <footer className="bg-zinc-950 border-t border-zinc-900 px-6 py-8 text-center space-y-3">
         {data.instagram && (
           <div className="flex justify-center items-center gap-2 text-xs text-lime-400">
@@ -447,23 +459,27 @@ function TemplateDental({ data }: { data: any }) {
       </header>
 
       {/* Hero */}
-      <div className="relative px-4 sm:px-6 py-12 md:py-20 text-center space-y-5 md:space-y-6 bg-gradient-to-b from-sky-950/30 via-slate-950 to-slate-950">
-        <div className="absolute top-10 left-1/2 -translate-x-1/2 w-72 md:w-96 h-32 md:h-40 bg-sky-500/20 blur-3xl pointer-events-none animate-pulse" />
-        <span className="inline-block text-sky-400 text-[11px] md:text-xs font-semibold tracking-widest uppercase border border-sky-400/40 px-3.5 py-1.5 rounded-full bg-sky-400/10 shadow-[0_0_15px_rgba(56,189,248,0.2)]">
-          Salud & Estética Dental Avanzada
-        </span>
-        <h1 className="text-2xl sm:text-4xl md:text-6xl font-bold text-white tracking-tight max-w-3xl mx-auto leading-tight px-2">
-          {data.businessName || 'Tu sonrisa en las mejores manos profesionales'}
-        </h1>
-        <p className="text-sky-200/80 text-xs sm:text-sm md:text-base max-w-2xl mx-auto leading-relaxed px-2">
-          Tecnología de punta, especialistas certificados y un trato humano excepcional para devolverle la salud y el brillo a tu sonrisa.
-        </p>
-        <div className="pt-2 md:pt-4 px-4">
-          {data.whatsapp && (
-            <a href={`https://wa.me/${data.whatsapp}`} target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-gradient-to-r from-sky-500 to-cyan-500 hover:from-sky-400 hover:to-cyan-400 text-slate-950 font-bold px-6 md:px-8 py-3.5 md:py-4 rounded-xl md:rounded-2xl text-xs md:text-sm transition shadow-[0_0_30px_rgba(56,189,248,0.5)] animate-pulse">
-              <span>📅 Agendar Evaluación Dental</span>
-            </a>
-          )}
+      <div className="relative px-4 sm:px-6 py-16 md:py-28 text-center space-y-5 md:space-y-6 overflow-hidden">
+        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&q=80&w=1200')] bg-cover bg-center" />
+        <div className="absolute inset-0 bg-slate-950/85 backdrop-blur-[2px]" />
+
+        <div className="relative z-10 space-y-5 max-w-3xl mx-auto">
+          <span className="inline-block text-sky-400 text-[11px] md:text-xs font-semibold tracking-widest uppercase border border-sky-400/40 px-3.5 py-1.5 rounded-full bg-sky-400/10 shadow-[0_0_15px_rgba(56,189,248,0.2)]">
+            Salud & Estética Dental Avanzada
+          </span>
+          <h1 className="text-2xl sm:text-4xl md:text-6xl font-bold text-white tracking-tight leading-tight px-2">
+            {data.businessName || 'Tu sonrisa en las mejores manos profesionales'}
+          </h1>
+          <p className="text-sky-200/80 text-xs sm:text-sm md:text-base max-w-2xl mx-auto leading-relaxed px-2">
+            Tecnología de punta, especialistas certificados y un trato humano excepcional para devolverle la salud y el brillo a tu sonrisa.
+          </p>
+          <div className="pt-2 md:pt-4 px-4">
+            {data.whatsapp && (
+              <a href={`https://wa.me/${data.whatsapp}`} target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-gradient-to-r from-sky-500 to-cyan-500 hover:from-sky-400 hover:to-cyan-400 text-slate-950 font-bold px-6 md:px-8 py-3.5 md:py-4 rounded-xl md:rounded-2xl text-xs md:text-sm transition shadow-[0_0_30px_rgba(56,189,248,0.5)] animate-pulse">
+                <span>📅 Agendar Evaluación Dental</span>
+              </a>
+            )}
+          </div>
         </div>
       </div>
 
@@ -506,7 +522,6 @@ function TemplateDental({ data }: { data: any }) {
         </div>
       </div>
 
-      {/* Footer */}
       <footer className="bg-slate-950 border-t border-sky-900/30 px-6 py-8 text-center space-y-3">
         {data.instagram && (
           <div className="flex justify-center items-center gap-2 text-xs text-sky-400">
@@ -550,23 +565,27 @@ function TemplateComida({ data }: { data: any }) {
       </header>
 
       {/* Hero */}
-      <div className="relative px-4 sm:px-6 py-12 md:py-20 text-center space-y-5 md:space-y-6 bg-gradient-to-b from-red-950/30 via-zinc-950 to-zinc-950">
-        <div className="absolute top-10 left-1/2 -translate-x-1/2 w-72 md:w-96 h-32 md:h-40 bg-red-500/20 blur-3xl pointer-events-none animate-pulse" />
-        <span className="inline-block text-red-400 text-[11px] md:text-xs font-black tracking-widest uppercase border border-red-400/40 px-3.5 py-1.5 rounded-full bg-red-400/10 shadow-[0_0_15px_rgba(239,68,68,0.2)]">
-          Sabor Artesanal & Ingredientes Frescos
-        </span>
-        <h1 className="text-3xl sm:text-5xl md:text-6xl font-black text-white uppercase tracking-tight max-w-3xl mx-auto leading-tight px-2">
-          {data.businessName || 'Las mejores hamburguesas a la parrilla'}
-        </h1>
-        <p className="text-zinc-300 text-xs sm:text-sm md:text-base max-w-2xl mx-auto leading-relaxed px-2">
-          Carne 100% vacuna jugosa, pan brioche recién horneado, queso cheddar fundido y salsas de la casa irresistibles.
-        </p>
-        <div className="pt-2 md:pt-4 px-4">
-          {data.whatsapp && (
-            <a href={`https://wa.me/${data.whatsapp}`} target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-gradient-to-r from-red-500 to-rose-500 hover:from-red-400 hover:to-rose-400 text-white font-extrabold px-6 md:px-8 py-3.5 md:py-4 rounded-xl md:rounded-2xl text-xs md:text-sm transition shadow-[0_0_30px_rgba(239,68,68,0.5)] animate-pulse">
-              <span>🚀 Hacer Pedido por WhatsApp</span>
-            </a>
-          )}
+      <div className="relative px-4 sm:px-6 py-16 md:py-28 text-center space-y-5 md:space-y-6 overflow-hidden">
+        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&q=80&w=1200')] bg-cover bg-center" />
+        <div className="absolute inset-0 bg-zinc-950/85 backdrop-blur-[2px]" />
+
+        <div className="relative z-10 space-y-5 max-w-3xl mx-auto">
+          <span className="inline-block text-red-400 text-[11px] md:text-xs font-black tracking-widest uppercase border border-red-400/40 px-3.5 py-1.5 rounded-full bg-red-400/10 shadow-[0_0_15px_rgba(239,68,68,0.2)]">
+            Sabor Artesanal & Ingredientes Frescos
+          </span>
+          <h1 className="text-3xl sm:text-5xl md:text-6xl font-black text-white uppercase tracking-tight leading-tight px-2">
+            {data.businessName || 'Las mejores hamburguesas a la parrilla'}
+          </h1>
+          <p className="text-zinc-300 text-xs sm:text-sm md:text-base max-w-2xl mx-auto leading-relaxed px-2">
+            Carne 100% vacuna jugosa, pan brioche recién horneado, queso cheddar fundido y salsas de la casa irresistibles.
+          </p>
+          <div className="pt-2 md:pt-4 px-4">
+            {data.whatsapp && (
+              <a href={`https://wa.me/${data.whatsapp}`} target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-gradient-to-r from-red-500 to-rose-500 hover:from-red-400 hover:to-rose-400 text-white font-extrabold px-6 md:px-8 py-3.5 md:py-4 rounded-xl md:rounded-2xl text-xs md:text-sm transition shadow-[0_0_30px_rgba(239,68,68,0.5)] animate-pulse">
+                <span>🚀 Hacer Pedido por WhatsApp</span>
+              </a>
+            )}
+          </div>
         </div>
       </div>
 
@@ -609,7 +628,6 @@ function TemplateComida({ data }: { data: any }) {
         </div>
       </div>
 
-      {/* Footer */}
       <footer className="bg-zinc-950 border-t border-red-900/30 px-6 py-8 text-center space-y-3">
         {data.instagram && (
           <div className="flex justify-center items-center gap-2 text-xs text-red-400">
@@ -646,7 +664,7 @@ export default function CrearWebPage() {
     category: 'servicios',
     country: 'CL',
     whatsapp: '',
-    instagram: '', // Campo opcional de redes sociales
+    instagram: '',
     description: '',
     template: 'abogados'
   })
