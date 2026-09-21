@@ -35,7 +35,10 @@ function CheckoutContent() {
       const response = await fetch('/api/crear-preferencia', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ plan: selectedPlan })
+        body: JSON.stringify({ 
+          plan: selectedPlan,
+          subdomain: searchParams.get('subdomain') || 'mi-web'
+        })
       })
       
       const data = await response.json()
