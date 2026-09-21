@@ -7,6 +7,7 @@ function CheckoutContent() {
   const searchParams = useSearchParams()
   const initialPlan = searchParams.get('plan') || 'standard'
   const [selectedPlan, setSelectedPlan] = useState(initialPlan)
+  const [loading, setLoading] = useState(false)
 
   // Configuración de precios y beneficios por plan
   const planDetails = {
@@ -27,6 +28,30 @@ function CheckoutContent() {
   }
 
   const currentPlan = planDetails[selectedPlan as keyof typeof planDetails] || planDetails.standard
+
+  const handlePagar = async () => {
+    try {
+      setLoading(true)
+      const response = await fetch('/api/crear-preferencia', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ plan: selectedPlan })
+      })
+      
+      const data = await response.json()
+      
+      if (data.init_point) {
+        window.location.href = data.init_point // Redirige al Checkout Pro de Mercado Pago
+      } else {
+        alert('Hubo un error al generar el pago: ' + (data.error || 'Desconocido'))
+        setLoading(false)
+      }
+    } catch (error) {
+      console.error(error)
+      alert('Error de conexión con la pasarela de pago')
+      setLoading(false)
+    }
+  }
 
   return (
     <main className="min-h-screen bg-slate-950 text-white p-6 md:p-12 max-w-2xl mx-auto font-sans">
@@ -95,12 +120,13 @@ function CheckoutContent() {
           {currentPlan.desc}
         </p>
         
-        {/* Botón de pago */}
+        {/* Botón de pago conectado a la API */}
         <button 
-          onClick={() => alert(`Redirigiendo a pasarela de pago para el ${currentPlan.name}...`)}
-          className="w-full bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-extrabold py-4 rounded-xl transition shadow-lg shadow-cyan-500/25 cursor-pointer text-base"
+          onClick={handlePagar}
+          disabled={loading}
+          className="w-full bg-cyan-400 hover:bg-cyan-300 disabled:opacity-50 text-slate-950 font-extrabold py-4 rounded-xl transition shadow-lg shadow-cyan-500/25 cursor-pointer text-base"
         >
-          Activar y Pagar ${currentPlan.price.toFixed(2)} USD
+          {loading ? 'Conectando con Mercado Pago...' : `Activar y Pagar $${currentPlan.price.toFixed(2)} USD`}
         </button>
       </div>
 
