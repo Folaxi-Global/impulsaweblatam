@@ -1,8 +1,8 @@
 import './globals.css'
 
 export const metadata = {
-  title: 'ImpulsaWeb Latam | Plataforma para Emprendedores',
-  description: 'Crea tu página web profesional conectada a WhatsApp en minutos.',
+  title: 'ImpulsaWeb Latam | Crea tu sitio web profesional y conecta WhatsApp',
+  description: 'La plataforma líder para emprendedores en Latam. Crea tu página web profesional conectada a WhatsApp y redes sociales en minutos.',
 }
 
 export default function RootLayout({
