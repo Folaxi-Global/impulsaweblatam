@@ -29,7 +29,7 @@ export async function POST(request: Request) {
             title: selectedPlan.title,
             quantity: 1,
             unit_price: selectedPlan.price,
-            currency_id: 'USD' // Puedes cambiar a 'CLP' si prefieres pesos chilenos
+            currency_id: 'USD' // O cámbialo a tu moneda local (ej. 'CLP', 'ARS', 'MXN', etc.)
           }
         ],
         back_urls: {
@@ -41,15 +41,16 @@ export async function POST(request: Request) {
       }
     })
 
+    // Retornamos el id y la URL de inicio de pago (init_point) hacia el frontend
     return NextResponse.json({ 
-      init_point: result.init_point,
-      preference_id: result.id 
+      id: result.id, 
+      init_point: result.init_point 
     })
 
-  } catch (error: any) {
-    console.error('Error creando preferencia en Mercado Pago:', error)
+  } catch (error) {
+    console.error('Error al crear la preferencia de Mercado Pago:', error)
     return NextResponse.json(
-      { error: error.message || 'Error interno al procesar el pago' }, 
+      { error: 'Error al procesar el pago con Mercado Pago' }, 
       { status: 500 }
     )
   }
