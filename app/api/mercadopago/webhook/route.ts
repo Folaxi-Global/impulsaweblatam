@@ -26,6 +26,7 @@ export async function POST(request: Request) {
 
       if (paymentInfo.status === 'approved') {
         console.log(`¡Pago aprobado! ID: ${paymentId}`)
+        // Aquí puedes agregar la lógica para actualizar el estado del mantenimiento en tu base de datos (Supabase)
       }
     }
 
